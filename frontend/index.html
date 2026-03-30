@@ -372,7 +372,14 @@ main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
     </div>
     <div class="field">
       <label>GPU Type</label>
-      <input type="text" id="cfgGpuType" placeholder="e.g. NVIDIA A40 or NVIDIA RTX A6000">
+      <input type="text" id="cfgGpuType" placeholder="e.g. NVIDIA RTX 4090">
+    </div>
+    <div class="field">
+      <label>Cloud Type</label>
+      <select id="cfgCloudType" style="width:100%;padding:6px 8px;border-radius:6px;border:1px solid #333;background:#1a1a1a;color:#e0e0e0;font-size:14px">
+        <option value="COMMUNITY">COMMUNITY (cheaper, more supply)</option>
+        <option value="SECURE">SECURE (dedicated)</option>
+      </select>
     </div>
     <div class="field" style="margin-bottom:0">
       <label>Pod Name <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
@@ -580,7 +587,8 @@ const RP = {
       apiKey:     localStorage.getItem('rp_apiKey')     || '',
       templateId: localStorage.getItem('rp_templateId') || '',
       volumeId:   localStorage.getItem('rp_volumeId')   || '',
-      gpuType:    localStorage.getItem('rp_gpuType')    || 'NVIDIA A40',
+      gpuType:    localStorage.getItem('rp_gpuType')    || 'NVIDIA RTX 4090',
+      cloudType:  localStorage.getItem('rp_cloudType')  || 'COMMUNITY',
       podName:    localStorage.getItem('rp_podName')    || 'ai-studio',
       podId:      localStorage.getItem('rp_podId')      || '',
     };
@@ -593,6 +601,7 @@ function openSettings() {
   document.getElementById('cfgTemplateId').value = c.templateId;
   document.getElementById('cfgVolumeId').value   = c.volumeId;
   document.getElementById('cfgGpuType').value    = c.gpuType;
+  document.getElementById('cfgCloudType').value  = c.cloudType;
   document.getElementById('cfgPodName').value    = c.podName;
   document.getElementById('settingsModal').classList.add('open');
 }
@@ -603,6 +612,7 @@ function saveSettings() {
   localStorage.setItem('rp_templateId', document.getElementById('cfgTemplateId').value.trim());
   localStorage.setItem('rp_volumeId',   document.getElementById('cfgVolumeId').value.trim());
   localStorage.setItem('rp_gpuType',    document.getElementById('cfgGpuType').value.trim());
+  localStorage.setItem('rp_cloudType',  document.getElementById('cfgCloudType').value);
   localStorage.setItem('rp_podName',    document.getElementById('cfgPodName').value.trim());
   closeSettings();
   toast('Settings saved', 'ok');
@@ -636,7 +646,7 @@ async function launchPod() {
         name: "${c.podName}"
         imageName: "runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04"
         gpuTypeId: "${c.gpuType}"
-        cloudType: SECURE
+        cloudType: ${c.cloudType || 'COMMUNITY'}
         supportPublicIp: true
         startSsh: true
         templateId: "${c.templateId}"
