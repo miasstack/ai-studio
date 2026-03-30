@@ -1,0 +1,377 @@
+{
+  "models": {
+
+    "firered-1.1": {
+      "id": "firered-1.1",
+      "name": "FireRed Edit 1.1",
+      "category": "image",
+      "mode": "i2i",
+      "label": "Image Edit",
+      "description": "FireRedTeam FireRed 1.1 — Qwen2-VL image editing. Give it an image + instruction and it edits it.",
+      "backend": "diffusers",
+      "hf_model_id": "FireRedTeam/FireRed-Image-Edit-1.1",
+      "hf_transformer_id": "prithivMLmods/Qwen-Image-Edit-Rapid-AIO-V19",
+      "param_nodes": {},
+      "defaults": {
+        "steps": 4,
+        "cfg": 1.0
+      },
+      "aspect_ratios": {},
+      "supports_first_frame": false,
+      "supports_last_frame": false,
+      "vram_gb": 14,
+      "custom_nodes": [],
+      "download_toggle": "DOWNLOAD_FIRERED",
+      "prompt_label": "Edit instruction (e.g. 'make the sky purple and add rain')"
+    },
+
+    "sdxl-t2i": {
+      "id": "sdxl-t2i",
+      "name": "Stable Diffusion XL",
+      "category": "image",
+      "mode": "t2i",
+      "label": "Text → Image",
+      "description": "SDXL 1.0 — high quality 1024px images, fits P100",
+      "workflow_file": "sdxl_t2i.json",
+      "huggingface_repo": "stabilityai/stable-diffusion-xl-base-1.0",
+      "model_files": [
+        {"src": "sd_xl_base_1.0.safetensors", "dest": "models/checkpoints/sd_xl_base_1.0.safetensors"}
+      ],
+      "param_nodes": {
+        "positive_prompt": {"node_id": "2", "field": "text"},
+        "negative_prompt": {"node_id": "3", "field": "text"},
+        "width": {"node_id": "4", "field": "width"},
+        "height": {"node_id": "4", "field": "height"},
+        "steps": {"node_id": "5", "field": "steps"},
+        "cfg": {"node_id": "5", "field": "cfg"},
+        "seed": {"node_id": "5", "field": "seed"},
+        "model_name": {"node_id": "1", "field": "ckpt_name"}
+      },
+      "lora_insert_after_node": "1",
+      "defaults": {"width": 1024, "height": 1024, "steps": 30, "cfg": 7.0},
+      "aspect_ratios": {
+        "1:1":  {"w": 1024, "h": 1024},
+        "16:9": {"w": 1344, "h": 768},
+        "9:16": {"w": 768,  "h": 1344},
+        "4:3":  {"w": 1152, "h": 896},
+        "3:4":  {"w": 896,  "h": 1152},
+        "21:9": {"w": 1536, "h": 640}
+      },
+      "supports_first_frame": false,
+      "supports_last_frame": false,
+      "vram_gb": 8,
+      "custom_nodes": [],
+      "download_toggle": "DOWNLOAD_SDXL"
+    },
+
+    "ltx-video-2b-t2v": {
+      "id": "ltx-video-2b-t2v",
+      "name": "LTX Video 2B",
+      "category": "video",
+      "mode": "t2v",
+      "label": "Text → Video",
+      "description": "Lightricks LTX-Video 2B — fast, high quality. Supports pinned first/last frames.",
+      "workflow_file": "ltx_t2v.json",
+      "huggingface_repo": "Lightricks/LTX-Video",
+      "model_files": [
+        {"src": "ltx-video-2b-v0.9.5.safetensors", "dest": "models/checkpoints/ltx-video-2b-v0.9.5.safetensors"}
+      ],
+      "clip_files": [
+        {"src": "t5xxl_fp16.safetensors", "clip_repo": "comfyanonymous/flux_text_encoders", "dest": "models/clip/t5xxl_fp16.safetensors"}
+      ],
+      "param_nodes": {
+        "positive_prompt": {"node_id": "6", "field": "text"},
+        "negative_prompt": {"node_id": "7", "field": "text"},
+        "width":  {"node_id": "5", "field": "width"},
+        "height": {"node_id": "5", "field": "height"},
+        "frames": {"node_id": "5", "field": "video_frames"},
+        "steps":  {"node_id": "3", "field": "steps"},
+        "cfg":    {"node_id": "3", "field": "cfg"},
+        "seed":   {"node_id": "3", "field": "noise_seed"},
+        "model_name": {"node_id": "1", "field": "ckpt_name"},
+        "clip_name":  {"node_id": "2", "field": "clip_name"}
+      },
+      "lora_insert_after_node": "1",
+      "defaults": {"width": 768, "height": 512, "frames": 97, "steps": 30, "cfg": 3.0, "fps": 24},
+      "aspect_ratios": {
+        "1:1":  {"w": 512,  "h": 512},
+        "16:9": {"w": 768,  "h": 512},
+        "9:16": {"w": 512,  "h": 768},
+        "4:3":  {"w": 704,  "h": 528},
+        "3:4":  {"w": 528,  "h": 704},
+        "21:9": {"w": 1024, "h": 432}
+      },
+      "supports_first_frame": true,
+      "supports_last_frame": true,
+      "first_frame_node": "LTXVAddGuide",
+      "first_frame_positive_node_id": "6",
+      "last_frame_positive_node_id": "6",
+      "fps": 24,
+      "max_frames": 121,
+      "vram_gb": 10,
+      "custom_nodes": ["ComfyUI-LTXVideo", "ComfyUI-VideoHelperSuite"],
+      "download_toggle": "DOWNLOAD_LTX_2B"
+    },
+
+    "ltx-video-2b-i2v": {
+      "id": "ltx-video-2b-i2v",
+      "name": "LTX Video 2B I2V",
+      "category": "video",
+      "mode": "i2v",
+      "label": "Image → Video",
+      "description": "Lightricks LTX-Video 2B — animate a still image into video",
+      "workflow_file": "ltx_i2v.json",
+      "huggingface_repo": "Lightricks/LTX-Video",
+      "model_files": [
+        {"src": "ltx-video-2b-v0.9.5.safetensors", "dest": "models/checkpoints/ltx-video-2b-v0.9.5.safetensors"}
+      ],
+      "clip_files": [
+        {"src": "t5xxl_fp16.safetensors", "clip_repo": "comfyanonymous/flux_text_encoders", "dest": "models/clip/t5xxl_fp16.safetensors"}
+      ],
+      "param_nodes": {
+        "positive_prompt": {"node_id": "6", "field": "text"},
+        "negative_prompt": {"node_id": "7", "field": "text"},
+        "width":  {"node_id": "5", "field": "width"},
+        "height": {"node_id": "5", "field": "height"},
+        "frames": {"node_id": "5", "field": "video_frames"},
+        "steps":  {"node_id": "3", "field": "steps"},
+        "cfg":    {"node_id": "3", "field": "cfg"},
+        "seed":   {"node_id": "3", "field": "noise_seed"}
+      },
+      "lora_insert_after_node": "1",
+      "defaults": {"width": 768, "height": 512, "frames": 97, "steps": 30, "cfg": 3.0, "fps": 24},
+      "aspect_ratios": {
+        "1:1":  {"w": 512,  "h": 512},
+        "16:9": {"w": 768,  "h": 512},
+        "9:16": {"w": 512,  "h": 768},
+        "4:3":  {"w": 704,  "h": 528},
+        "3:4":  {"w": 528,  "h": 704}
+      },
+      "supports_first_frame": false,
+      "supports_last_frame": true,
+      "fps": 24,
+      "max_frames": 121,
+      "vram_gb": 10,
+      "custom_nodes": ["ComfyUI-LTXVideo", "ComfyUI-VideoHelperSuite"],
+      "download_toggle": "DOWNLOAD_LTX_2B"
+    },
+
+    "wan-1.3b-t2v": {
+      "id": "wan-1.3b-t2v",
+      "name": "Wan 2.1 T2V 1.3B",
+      "category": "video",
+      "mode": "t2v",
+      "label": "Text → Video",
+      "description": "Alibaba Wan 2.1 — 1.3B, optimized for P100 (16GB VRAM)",
+      "workflow_file": "wan_t2v.json",
+      "huggingface_repo": "Wan-AI/Wan2.1-T2V-1.3B",
+      "model_files": [
+        {"src": ".", "dest": "models/wan/Wan2.1-T2V-1.3B", "is_dir": true}
+      ],
+      "param_nodes": {
+        "positive_prompt": {"node_id": "6", "field": "text"},
+        "negative_prompt": {"node_id": "7", "field": "text"},
+        "width":  {"node_id": "5", "field": "width"},
+        "height": {"node_id": "5", "field": "height"},
+        "frames": {"node_id": "5", "field": "video_frames"},
+        "steps":  {"node_id": "3", "field": "steps"},
+        "cfg":    {"node_id": "3", "field": "guidance_scale"},
+        "seed":   {"node_id": "3", "field": "seed"},
+        "model_path": {"node_id": "1", "field": "model_path"}
+      },
+      "defaults": {"width": 832, "height": 480, "frames": 81, "steps": 30, "cfg": 6.0, "fps": 16},
+      "aspect_ratios": {
+        "1:1":  {"w": 480,  "h": 480},
+        "16:9": {"w": 832,  "h": 480},
+        "9:16": {"w": 480,  "h": 832},
+        "4:3":  {"w": 640,  "h": 480},
+        "3:4":  {"w": 480,  "h": 640}
+      },
+      "supports_first_frame": false,
+      "supports_last_frame": false,
+      "fps": 16,
+      "max_frames": 121,
+      "vram_gb": 8,
+      "custom_nodes": ["ComfyUI-WanVideoWrapper", "ComfyUI-VideoHelperSuite"],
+      "download_toggle": "DOWNLOAD_WAN_1_3B"
+    },
+
+    "wan-1.3b-i2v": {
+      "id": "wan-1.3b-i2v",
+      "name": "Wan 2.1 I2V 1.3B",
+      "category": "video",
+      "mode": "i2v",
+      "label": "Image → Video",
+      "description": "Alibaba Wan 2.1 — animate images, P100 compatible",
+      "workflow_file": "wan_i2v.json",
+      "huggingface_repo": "Wan-AI/Wan2.1-I2V-14B-480P",
+      "model_files": [
+        {"src": ".", "dest": "models/wan/Wan2.1-I2V-14B-480P", "is_dir": true}
+      ],
+      "param_nodes": {
+        "positive_prompt": {"node_id": "6", "field": "text"},
+        "negative_prompt": {"node_id": "7", "field": "text"},
+        "width":  {"node_id": "5", "field": "width"},
+        "height": {"node_id": "5", "field": "height"},
+        "frames": {"node_id": "5", "field": "video_frames"},
+        "steps":  {"node_id": "3", "field": "steps"},
+        "cfg":    {"node_id": "3", "field": "guidance_scale"},
+        "seed":   {"node_id": "3", "field": "seed"}
+      },
+      "defaults": {"width": 832, "height": 480, "frames": 81, "steps": 30, "cfg": 6.0, "fps": 16},
+      "aspect_ratios": {
+        "1:1":  {"w": 480,  "h": 480},
+        "16:9": {"w": 832,  "h": 480},
+        "9:16": {"w": 480,  "h": 832},
+        "4:3":  {"w": 640,  "h": 480},
+        "3:4":  {"w": 480,  "h": 640}
+      },
+      "supports_first_frame": false,
+      "supports_last_frame": false,
+      "fps": 16,
+      "max_frames": 121,
+      "vram_gb": 12,
+      "custom_nodes": ["ComfyUI-WanVideoWrapper", "ComfyUI-VideoHelperSuite"],
+      "download_toggle": "DOWNLOAD_WAN_I2V"
+    },
+
+    "wan-14b-t2v": {
+      "id": "wan-14b-t2v",
+      "name": "Wan 2.1 T2V 14B",
+      "category": "video",
+      "mode": "t2v",
+      "label": "Text → Video (HQ)",
+      "description": "Alibaba Wan 2.1 — 14B, highest quality. Requires A100/H100.",
+      "workflow_file": "wan_t2v.json",
+      "huggingface_repo": "Wan-AI/Wan2.1-T2V-14B",
+      "model_files": [
+        {"src": ".", "dest": "models/wan/Wan2.1-T2V-14B", "is_dir": true}
+      ],
+      "param_nodes": {
+        "positive_prompt": {"node_id": "6", "field": "text"},
+        "negative_prompt": {"node_id": "7", "field": "text"},
+        "width":  {"node_id": "5", "field": "width"},
+        "height": {"node_id": "5", "field": "height"},
+        "frames": {"node_id": "5", "field": "video_frames"},
+        "steps":  {"node_id": "3", "field": "steps"},
+        "cfg":    {"node_id": "3", "field": "guidance_scale"},
+        "seed":   {"node_id": "3", "field": "seed"},
+        "model_path": {"node_id": "1", "field": "model_path"}
+      },
+      "defaults": {"width": 1280, "height": 720, "frames": 81, "steps": 30, "cfg": 6.0, "fps": 16},
+      "aspect_ratios": {
+        "1:1":  {"w": 720,  "h": 720},
+        "16:9": {"w": 1280, "h": 720},
+        "9:16": {"w": 720,  "h": 1280},
+        "4:3":  {"w": 960,  "h": 720},
+        "3:4":  {"w": 720,  "h": 960},
+        "21:9": {"w": 1680, "h": 720}
+      },
+      "supports_first_frame": false,
+      "supports_last_frame": false,
+      "fps": 16,
+      "max_frames": 121,
+      "vram_gb": 32,
+      "custom_nodes": ["ComfyUI-WanVideoWrapper", "ComfyUI-VideoHelperSuite"],
+      "download_toggle": "DOWNLOAD_WAN_14B"
+    },
+
+    "wan-2.2-t2i": {
+      "id": "wan-2.2-t2i",
+      "name": "Wan 2.2 T2I 14B",
+      "category": "image",
+      "mode": "t2i",
+      "label": "Text → Image",
+      "description": "Alibaba Wan 2.2 14B — high quality text-to-image, dual-pass sampling",
+      "workflow_file": "wan22_t2i.json",
+      "param_nodes": {
+        "positive_prompt": {"node_id": "3", "field": "text"},
+        "negative_prompt": {"node_id": "4", "field": "text"},
+        "width":  {"node_id": "5", "field": "width"},
+        "height": {"node_id": "5", "field": "height"},
+        "steps":  {"node_id": "35", "field": "steps"},
+        "cfg":    {"node_id": "35", "field": "cfg"},
+        "seed":   {"node_id": "35", "field": "noise_seed"}
+      },
+      "defaults": {"width": 1024, "height": 1024, "steps": 10, "cfg": 3.5},
+      "aspect_ratios": {
+        "1:1":  {"w": 1024, "h": 1024},
+        "16:9": {"w": 1280, "h": 720},
+        "9:16": {"w": 720,  "h": 1280},
+        "4:3":  {"w": 1152, "h": 864},
+        "3:4":  {"w": 864,  "h": 1152}
+      },
+      "supports_first_frame": false,
+      "supports_last_frame": false,
+      "vram_gb": 20,
+      "custom_nodes": ["ComfyUI-VideoHelperSuite"],
+      "download_toggle": "DOWNLOAD_WAN22_T2I",
+      "model_files": [
+        {"src": "Wan2_2-T2V-A14B_HIGH_fp8_e4m3fn_scaled_KJ.safetensors", "dest": "models/diffusion_models/Wan2_2-T2V-A14B_HIGH_fp8_e4m3fn_scaled_KJ.safetensors"},
+        {"src": "Wan2_2-T2V-A14B-LOW_fp8_e4m3fn_scaled_KJ.safetensors", "dest": "models/diffusion_models/Wan2_2-T2V-A14B-LOW_fp8_e4m3fn_scaled_KJ.safetensors"}
+      ]
+    },
+
+    "wan-2.2-i2v": {
+      "id": "wan-2.2-i2v",
+      "name": "Wan 2.2 I2V 14B",
+      "category": "video",
+      "mode": "i2v",
+      "label": "Image → Video",
+      "description": "Alibaba Wan 2.2 14B — animate images, 10-step dual-pass sampling",
+      "workflow_file": "wan22_i2v.json",
+      "param_nodes": {
+        "positive_prompt": {"node_id": "6", "field": "text"},
+        "negative_prompt": {"node_id": "7", "field": "text"},
+        "width":      {"node_id": "50", "field": "width"},
+        "height":     {"node_id": "50", "field": "height"},
+        "frames":     {"node_id": "50", "field": "length"},
+        "seed":       {"node_id": "185", "field": "noise_seed"},
+        "init_image": {"node_id": "214", "field": "image"}
+      },
+      "defaults": {"width": 832, "height": 480, "frames": 81, "steps": 10, "cfg": 2.0, "fps": 16},
+      "aspect_ratios": {
+        "1:1":  {"w": 832,  "h": 832},
+        "16:9": {"w": 1024, "h": 576},
+        "9:16": {"w": 576,  "h": 1024},
+        "4:3":  {"w": 832,  "h": 480},
+        "3:4":  {"w": 544,  "h": 720}
+      },
+      "supports_first_frame": false,
+      "supports_last_frame": false,
+      "fps": 16,
+      "max_frames": 81,
+      "vram_gb": 20,
+      "custom_nodes": ["ComfyUI-VideoHelperSuite"],
+      "download_toggle": "DOWNLOAD_WAN22_I2V",
+      "model_files": [
+        {"src": "Wan_2.2_I2V_HighNoise_10steps_fp8.safetensors", "dest": "models/diffusion_models/Wan_2.2_I2V_HighNoise_10steps_fp8.safetensors"},
+        {"src": "Wan_2.2_I2V_LowNoise_10steps_fp8.safetensors", "dest": "models/diffusion_models/Wan_2.2_I2V_LowNoise_10steps_fp8.safetensors"}
+      ]
+    },
+
+    "custom": {
+      "id": "custom",
+      "name": "Custom Workflow",
+      "category": "custom",
+      "mode": "custom",
+      "label": "Custom",
+      "description": "Drop in any ComfyUI workflow exported as API JSON",
+      "workflow_file": "custom.json",
+      "param_nodes": {},
+      "defaults": {},
+      "aspect_ratios": {},
+      "supports_first_frame": false,
+      "supports_last_frame": false,
+      "vram_gb": 0,
+      "custom_nodes": []
+    }
+  },
+
+  "custom_nodes": {
+    "ComfyUI-LTXVideo":         {"repo": "https://github.com/Lightricks/ComfyUI-LTXVideo"},
+    "ComfyUI-WanVideoWrapper":  {"repo": "https://github.com/kijai/ComfyUI-WanVideoWrapper"},
+    "ComfyUI-VideoHelperSuite": {"repo": "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite"},
+    "ComfyUI-Manager":          {"repo": "https://github.com/ltdrdata/ComfyUI-Manager"}
+  }
+}
