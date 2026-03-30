@@ -372,7 +372,7 @@ main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
     </div>
     <div class="field">
       <label>GPU Type</label>
-      <input type="text" id="cfgGpuType" placeholder="e.g. NVIDIA RTX 4090">
+      <input type="text" id="cfgGpuType" placeholder="e.g. NVIDIA GeForce RTX 4090">
     </div>
     <div class="field">
       <label>Cloud Type</label>
@@ -587,7 +587,7 @@ const RP = {
       apiKey:     localStorage.getItem('rp_apiKey')     || '',
       templateId: localStorage.getItem('rp_templateId') || '',
       volumeId:   localStorage.getItem('rp_volumeId')   || '',
-      gpuType:    localStorage.getItem('rp_gpuType')    || 'NVIDIA RTX 4090',
+      gpuType:    localStorage.getItem('rp_gpuType')    || 'NVIDIA GeForce RTX 4090',
       cloudType:  localStorage.getItem('rp_cloudType')  || 'COMMUNITY',
       podName:    localStorage.getItem('rp_podName')    || 'ai-studio',
       podId:      localStorage.getItem('rp_podId')      || '',
