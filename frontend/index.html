@@ -634,7 +634,7 @@ async function launchPod() {
     mutation {
       podFindAndDeployOnDemand(input: {
         name: "${c.podName}"
-        imageName: "runpod/base:0.6.2"
+        imageName: "runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04"
         gpuTypeId: "${c.gpuType}"
         cloudType: SECURE
         supportPublicIp: true
@@ -1258,17 +1258,23 @@ function connectWS() {
 // Status
 // ═══════════════════════════════════════════════════════════════
 async function pollStatus() {
+  const podUrl = localStorage.getItem('rp_podUrl');
+  const podId  = localStorage.getItem('rp_podId');
+  const dot = document.getElementById('sDot');
+  const txt = document.getElementById('sTxt');
+  const q   = document.getElementById('sQueue');
+  if (!podUrl || !podId) {
+    dot.className = 'dot err'; txt.textContent = 'Pod offline'; q.textContent = '';
+    return;
+  }
   try {
-    const d = await (await fetch('/api/status')).json();
-    const dot = document.getElementById('sDot');
-    const txt = document.getElementById('sTxt');
-    const q   = document.getElementById('sQueue');
+    const d = await (await fetch(`${podUrl}/api/status`, { signal: AbortSignal.timeout(5000) })).json();
     if (d.comfyui === 'connected') {
       dot.className = 'dot ok'; txt.textContent = 'Ready';
       const n = d.queue_running + d.queue_pending;
       q.textContent = n > 0 ? `${n} in queue` : '';
     } else { dot.className = 'dot err'; txt.textContent = 'ComfyUI offline'; q.textContent = ''; }
-  } catch { document.getElementById('sDot').className = 'dot err'; document.getElementById('sTxt').textContent = 'Offline'; }
+  } catch { dot.className = 'dot err'; txt.textContent = 'Pod offline'; q.textContent = ''; }
 }
 
 // ═══════════════════════════════════════════════════════════════
