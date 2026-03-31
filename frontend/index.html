@@ -344,7 +344,7 @@ main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
   <div class="logo">✦ AI Studio</div>
   <div class="hdr-right">
     <!-- Pod control -->
-    <button class="pod-btn gear" id="podGear" onclick="openSettings()" title="RunPod settings">⚙</button>
+    <button class="pod-btn gear" id="podGear" onclick="openSettings()" title="Vast.ai settings">⚙</button>
     <button class="pod-btn launch" id="podLaunch" onclick="launchPod()" style="display:none">▶ Launch Pod</button>
     <button class="pod-btn stop"   id="podStop"   onclick="stopPod()"   style="display:none">■ Stop Pod</button>
     <div style="width:1px;height:20px;background:var(--border);margin:0 4px"></div>
@@ -357,33 +357,18 @@ main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
 <!-- ── Settings Modal ── -->
 <div class="modal-bg" id="settingsModal" onclick="if(event.target===this)closeSettings()">
   <div class="modal">
-    <h2>RunPod Settings</h2>
+    <h2>Vast.ai Settings</h2>
     <div class="field">
-      <label>RunPod API Key</label>
-      <input type="text" id="cfgApiKey" placeholder="rp_xxxxxxxxxxxxxxxxxxxx">
+      <label>Vast.ai API Key</label>
+      <input type="text" id="cfgApiKey" placeholder="your vast.ai api key">
     </div>
     <div class="field">
-      <label>Pod Template ID</label>
-      <input type="text" id="cfgTemplateId" placeholder="e.g. abc123xyz">
-    </div>
-    <div class="field">
-      <label>Network Volume ID <span style="font-weight:400;color:var(--muted)">(stores models)</span></label>
-      <input type="text" id="cfgVolumeId" placeholder="e.g. js7r7jbbln">
-    </div>
-    <div class="field">
-      <label>GPU Type</label>
-      <input type="text" id="cfgGpuType" placeholder="e.g. NVIDIA GeForce RTX 4090">
-    </div>
-    <div class="field">
-      <label>Cloud Type</label>
-      <select id="cfgCloudType" style="width:100%;padding:6px 8px;border-radius:6px;border:1px solid #333;background:#1a1a1a;color:#e0e0e0;font-size:14px">
-        <option value="COMMUNITY">COMMUNITY (cheaper, more supply)</option>
-        <option value="SECURE">SECURE (dedicated)</option>
-      </select>
+      <label>Instance ID</label>
+      <input type="text" id="cfgInstanceId" placeholder="e.g. 33876269">
     </div>
     <div class="field" style="margin-bottom:0">
-      <label>Pod Name <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
-      <input type="text" id="cfgPodName" placeholder="ai-studio">
+      <label>Studio Backend URL <span style="font-weight:400;color:var(--muted)">(set automatically on launch)</span></label>
+      <input type="text" id="cfgStudioUrl" placeholder="e.g. http://50.173.30.254:7860">
     </div>
     <div class="modal-foot">
       <button class="btn-sec" onclick="closeSettings()">Cancel</button>
@@ -578,120 +563,67 @@ let activeJobs = {};
 let ws = null;
 
 // ═══════════════════════════════════════════════════════════════
-// RunPod Pod Control
+// Vast.ai Pod Control
 // ═══════════════════════════════════════════════════════════════
-const RP = {
-  PROXY: '/api/runpod',   // backend proxies to api.runpod.io (avoids CORS)
+const VA = {
+  PROXY: '/api/vastai',
   get cfg() {
     return {
-      apiKey:     localStorage.getItem('rp_apiKey')     || '',
-      templateId: localStorage.getItem('rp_templateId') || 'l09djdzv8y',
-      volumeId:   localStorage.getItem('rp_volumeId')   || '',
-      gpuType:    localStorage.getItem('rp_gpuType')    || 'NVIDIA RTX A5000',
-      cloudType:  localStorage.getItem('rp_cloudType')  || 'COMMUNITY',
-      podName:    localStorage.getItem('rp_podName')    || 'ai-studio',
-      podId:      localStorage.getItem('rp_podId')      || '',
-      podUrl:     localStorage.getItem('rp_podUrl')     || '',
+      apiKey:     localStorage.getItem('va_apiKey')     || '',
+      instanceId: localStorage.getItem('va_instanceId') || '',
+      studioUrl:  localStorage.getItem('va_studioUrl')  || '',
     };
   }
 };
 
 function openSettings() {
-  const c = RP.cfg;
-  document.getElementById('cfgApiKey').value     = c.apiKey;
-  document.getElementById('cfgTemplateId').value = c.templateId;
-  document.getElementById('cfgVolumeId').value   = c.volumeId;
-  document.getElementById('cfgGpuType').value    = c.gpuType;
-  document.getElementById('cfgCloudType').value  = c.cloudType;
-  document.getElementById('cfgPodName').value    = c.podName;
+  const c = VA.cfg;
+  document.getElementById('cfgApiKey').value    = c.apiKey;
+  document.getElementById('cfgInstanceId').value = c.instanceId;
+  document.getElementById('cfgStudioUrl').value  = c.studioUrl;
   document.getElementById('settingsModal').classList.add('open');
 }
 function closeSettings() { document.getElementById('settingsModal').classList.remove('open'); }
 
 function saveSettings() {
-  localStorage.setItem('rp_apiKey',     document.getElementById('cfgApiKey').value.trim());
-  localStorage.setItem('rp_templateId', document.getElementById('cfgTemplateId').value.trim());
-  localStorage.setItem('rp_volumeId',   document.getElementById('cfgVolumeId').value.trim());
-  localStorage.setItem('rp_gpuType',    document.getElementById('cfgGpuType').value.trim());
-  localStorage.setItem('rp_cloudType',  document.getElementById('cfgCloudType').value);
-  localStorage.setItem('rp_podName',    document.getElementById('cfgPodName').value.trim());
+  localStorage.setItem('va_apiKey',     document.getElementById('cfgApiKey').value.trim());
+  localStorage.setItem('va_instanceId', document.getElementById('cfgInstanceId').value.trim());
+  const url = document.getElementById('cfgStudioUrl').value.trim().replace(/\/$/, '');
+  localStorage.setItem('va_studioUrl', url);
   closeSettings();
   toast('Settings saved', 'ok');
   updatePodButtons();
 }
 
 function updatePodButtons() {
-  const c = RP.cfg;
-  const hasConfig = c.apiKey && c.templateId;
-  document.getElementById('podGear').style.display   = '';
+  const c = VA.cfg;
+  const hasConfig = !!c.apiKey && !!c.instanceId;
+  document.getElementById('podGear').style.display = '';
   if (!hasConfig) {
     document.getElementById('podLaunch').style.display = 'none';
     document.getElementById('podStop').style.display   = 'none';
     return;
   }
-  const hasPod = !!c.podId;
-  document.getElementById('podLaunch').style.display = hasPod ? 'none' : '';
-  document.getElementById('podStop').style.display   = hasPod ? ''     : 'none';
+  const running = !!c.studioUrl;
+  document.getElementById('podLaunch').style.display = running ? 'none' : '';
+  document.getElementById('podStop').style.display   = running ? ''     : 'none';
 }
 
 async function launchPod() {
-  const c = RP.cfg;
-  if (!c.apiKey || !c.templateId) { openSettings(); return; }
+  const c = VA.cfg;
+  if (!c.apiKey || !c.instanceId) { openSettings(); return; }
 
-  // GPU fallback order — all 24GB VRAM options, cheapest first
-  const GPU_FALLBACKS = [
-    'NVIDIA RTX A5000',
-    'NVIDIA GeForce RTX 3090',
-    'NVIDIA RTX 3090 Ti',
-    'NVIDIA GeForce RTX 4090',
-    'NVIDIA RTX A6000',
-  ];
-  const CLOUD_ORDER = ['COMMUNITY', 'SECURE', 'ALL'];
-
-  setLaunchOverlay(true, 'Creating pod…', 'Requesting GPU from RunPod…');
-
-  const tryLaunch = (gpuType, cloudType) => {
-    const mutation = `
-      mutation {
-        podFindAndDeployOnDemand(input: {
-          name: "${c.podName}"
-          imageName: "runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04"
-          gpuTypeId: "${gpuType}"
-          cloudType: ${cloudType}
-          supportPublicIp: true
-          startSsh: true
-          templateId: "${c.templateId}"
-          ${c.volumeId ? `networkVolumeId: "${c.volumeId}"` : ''}
-          ports: "7860/http,8188/http,22/tcp"
-          containerDiskInGb: 20
-          volumeInGb: 0
-        }) { id machineId desiredStatus }
-      }
-    `;
-    return rpGraphQL(mutation, c.apiKey);
-  };
-
+  setLaunchOverlay(true, 'Starting instance…', `Instance ${c.instanceId}`);
   try {
-    let pod = null;
-    let usedGpu = '';
-    outer:
-    for (const cloud of CLOUD_ORDER) {
-      for (const gpu of GPU_FALLBACKS) {
-        setLaunchOverlay(true, 'Creating pod…', `Trying ${gpu} (${cloud})…`);
-        const res = await tryLaunch(gpu, cloud);
-        const p = res?.data?.podFindAndDeployOnDemand;
-        if (p?.id) { pod = p; usedGpu = gpu; break outer; }
-        const code = res?.errors?.[0]?.extensions?.code;
-        if (code !== 'SUPPLY_CONSTRAINT') throw new Error(JSON.stringify(res?.errors || res));
-      }
-    }
-    if (!pod) throw new Error('No GPU instances available right now. RunPod is sold out. Try again in a few minutes.');
+    const res = await fetch(VA.PROXY, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'start', instanceId: c.instanceId, apiKey: c.apiKey }),
+    });
+    if (!res.ok) throw new Error(`API error ${res.status}`);
 
-    localStorage.setItem('rp_podId', pod.id);
-    toast(`Launched on ${usedGpu}`, 'ok');
-    setLaunchOverlay(true, 'Pod created — waiting for it to start…', `Pod ID: ${pod.id}`);
-    await waitForPodReady(pod.id, c.apiKey);
-
+    setLaunchOverlay(true, 'Instance starting…', 'Waiting for it to come online…');
+    await waitForInstance(c.instanceId, c.apiKey);
   } catch(e) {
     setLaunchOverlay(false);
     toast('Launch failed: ' + e.message, 'err');
@@ -699,28 +631,29 @@ async function launchPod() {
   }
 }
 
-async function waitForPodReady(podId, apiKey) {
-  // RunPod HTTP proxy URL format: https://{pod-id}-{port}.proxy.runpod.net
-  const url = `https://${podId}-7860.proxy.runpod.net`;
-  localStorage.setItem('rp_podUrl', url);
-
-  const query = `query { pod(input: { podId: "${podId}" }) { id desiredStatus } }`;
-
-  for (let i = 0; i < 90; i++) {
-    await sleep(3000);
-    setLaunchOverlay(true, 'Waiting for pod to start…', `${Math.round(i*3)}s elapsed…`);
+async function waitForInstance(instanceId, apiKey) {
+  for (let i = 0; i < 60; i++) {
+    await sleep(5000);
+    setLaunchOverlay(true, 'Waiting for instance…', `${Math.round(i*5)}s elapsed…`);
     try {
-      const res = await rpGraphQL(query, apiKey);
-      const pod = res?.data?.pod;
-      if (pod?.desiredStatus === 'RUNNING') {
-        setLaunchOverlay(true, 'Pod is running! Starting AI Studio…', url);
+      const res = await fetch(VA.PROXY, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'status', instanceId, apiKey }),
+      });
+      const data = await res.json();
+      if (data.actual_status === 'running' && data.ip) {
+        // Build studio URL from instance IP — backend runs on port 7860
+        const url = `http://${data.ip}:7860`;
+        localStorage.setItem('va_studioUrl', url);
+        setLaunchOverlay(true, 'Instance running! Waiting for AI Studio…', url);
         await waitForStudio(url);
         return;
       }
     } catch(e) { console.warn(e); }
   }
   setLaunchOverlay(false);
-  toast('Pod timed out. Check RunPod dashboard.', 'err');
+  toast('Instance timed out. Check Vast.ai dashboard.', 'err');
 }
 
 async function waitForStudio(baseUrl) {
@@ -732,67 +665,37 @@ async function waitForStudio(baseUrl) {
       if (r.ok) {
         setLaunchOverlay(false);
         updatePodButtons();
-        document.getElementById('sTxt').textContent = 'Pod running';
+        document.getElementById('sTxt').textContent = 'Ready';
         document.getElementById('sDot').className = 'dot ok';
-        showOpenStudioBtn(baseUrl);
-        connectWS(); // connect WebSocket to pod backend
+        connectWS();
         toast('AI Studio is ready!', 'ok');
         return;
       }
     } catch { /* not ready yet */ }
   }
   setLaunchOverlay(false);
-  toast('AI Studio did not respond. Check RunPod logs.', 'err');
-}
-
-function showOpenStudioBtn(url) {
-  // Show an "Open Studio" button in the header when pod is running
-  let btn = document.getElementById('podOpen');
-  if (!btn) {
-    btn = document.createElement('button');
-    btn.id = 'podOpen';
-    btn.className = 'pod-btn';
-    btn.style.cssText = 'border-color:var(--accent);color:var(--accent)';
-    btn.onclick = () => window.open(url, '_blank');
-    // Insert before the divider
-    const divider = document.querySelector('.hdr-right [style*="1px solid"]');
-    divider.parentNode.insertBefore(btn, divider);
-  }
-  btn.textContent = '↗ Open Studio';
-  btn.onclick = () => window.open(url, '_blank');
+  toast('AI Studio did not respond. Make sure the backend is running on the instance.', 'err');
 }
 
 async function stopPod() {
-  const c = RP.cfg;
-  if (!c.podId) return;
-  if (!confirm('Stop the pod? GPU billing will end immediately.')) return;
+  const c = VA.cfg;
+  if (!c.instanceId) return;
+  if (!confirm('Stop the instance? GPU billing will end immediately.')) return;
 
-  const mutation = `mutation { podStop(input: { podId: "${c.podId}" }) { id desiredStatus } }`;
   try {
-    await rpGraphQL(mutation, c.apiKey);
-    localStorage.removeItem('rp_podId');
-    localStorage.removeItem('rp_podUrl');
-    toast('Pod stopped — GPU billing ended', 'ok');
-    // Remove the Open Studio button
-    const btn = document.getElementById('podOpen');
-    if (btn) btn.remove();
+    await fetch(VA.PROXY, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'stop', instanceId: c.instanceId, apiKey: c.apiKey }),
+    });
+    localStorage.removeItem('va_studioUrl');
+    toast('Instance stopped — GPU billing ended', 'ok');
     updatePodButtons();
     document.getElementById('sDot').className = 'dot err';
-    document.getElementById('sTxt').textContent = 'Pod stopped';
+    document.getElementById('sTxt').textContent = 'Instance stopped';
   } catch(e) {
     toast('Stop failed: ' + e.message, 'err');
   }
-}
-
-async function rpGraphQL(query, apiKey) {
-  // POST through our backend proxy to avoid CORS
-  const res = await fetch(RP.PROXY, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ query, apiKey }),
-  });
-  if (!res.ok) throw new Error(`Proxy error ${res.status}`);
-  return res.json();
 }
 
 function setLaunchOverlay(open, msg, sub) {
@@ -831,15 +734,8 @@ async function init() {
   updateModeTabs();
   updatePodButtons();
 
-  // If a pod is already recorded as running, restore the Open Studio button
-  const savedUrl = localStorage.getItem('rp_podUrl');
-  const savedId  = localStorage.getItem('rp_podId');
-  if (savedUrl && savedId) {
-    showOpenStudioBtn(savedUrl);
-  }
-
   // Prompt settings on first visit if no API key configured
-  if (!localStorage.getItem('rp_apiKey')) {
+  if (!localStorage.getItem('va_apiKey')) {
     setTimeout(() => openSettings(), 600);
   }
 
@@ -855,7 +751,7 @@ async function init() {
 // ═══════════════════════════════════════════════════════════════
 async function loadModels() {
   // Load from models_config embedded in page or from pod backend if running
-  const podUrl = localStorage.getItem('rp_podUrl');
+  const podUrl = localStorage.getItem('va_studioUrl');
   const url = podUrl ? `${podUrl}/api/models` : '/api/models';
   try {
     models = await (await fetch(url)).json();
@@ -1129,7 +1025,7 @@ function readB64(file, cb) {
 // LoRAs
 // ═══════════════════════════════════════════════════════════════
 async function loadLoras() {
-  const podUrl = localStorage.getItem('rp_podUrl');
+  const podUrl = localStorage.getItem('va_studioUrl');
   const url = podUrl ? `${podUrl}/api/loras` : '/api/loras';
   try { loras = await (await fetch(url)).json(); } catch { loras = []; }
 }
@@ -1202,8 +1098,8 @@ async function generate() {
   if (firstFrameB64 && m.supports_first_frame) payload.first_frame_b64 = firstFrameB64;
   if (lastFrameB64  && m.supports_last_frame)  payload.last_frame_b64  = lastFrameB64;
 
-  const podUrl = localStorage.getItem('rp_podUrl');
-  if (!podUrl) { toast('Pod not running — launch it first', 'err'); btn.disabled = false; document.getElementById('genLabel').textContent = 'Generate'; return; }
+  const podUrl = localStorage.getItem('va_studioUrl');
+  if (!podUrl) { toast('Instance not running — launch it first', 'err'); btn.disabled = false; document.getElementById('genLabel').textContent = 'Generate'; return; }
 
   try {
     const res = await fetch(`${podUrl}/api/generate`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
@@ -1281,9 +1177,9 @@ function showGrid() {
 // WebSocket
 // ═══════════════════════════════════════════════════════════════
 function connectWS() {
-  const podId = localStorage.getItem('rp_podId');
-  if (!podId) return;
-  const wsUrl = `wss://${podId}-7860.proxy.runpod.net/ws`;
+  const studioUrl = localStorage.getItem('va_studioUrl');
+  if (!studioUrl) return;
+  const wsUrl = studioUrl.replace(/^http/, 'ws') + '/ws';
   ws = new WebSocket(wsUrl);
   ws.onmessage = e => {
     const msg = JSON.parse(e.data);
@@ -1299,13 +1195,12 @@ function connectWS() {
 // Status
 // ═══════════════════════════════════════════════════════════════
 async function pollStatus() {
-  const podUrl = localStorage.getItem('rp_podUrl');
-  const podId  = localStorage.getItem('rp_podId');
+  const podUrl = localStorage.getItem('va_studioUrl');
   const dot = document.getElementById('sDot');
   const txt = document.getElementById('sTxt');
   const q   = document.getElementById('sQueue');
-  if (!podUrl || !podId) {
-    dot.className = 'dot err'; txt.textContent = 'Pod offline'; q.textContent = '';
+  if (!podUrl) {
+    dot.className = 'dot err'; txt.textContent = 'Instance offline'; q.textContent = '';
     return;
   }
   try {
@@ -1315,7 +1210,7 @@ async function pollStatus() {
       const n = d.queue_running + d.queue_pending;
       q.textContent = n > 0 ? `${n} in queue` : '';
     } else { dot.className = 'dot err'; txt.textContent = 'ComfyUI offline'; q.textContent = ''; }
-  } catch { dot.className = 'dot err'; txt.textContent = 'Pod offline'; q.textContent = ''; }
+  } catch { dot.className = 'dot err'; txt.textContent = 'Instance offline'; q.textContent = ''; }
 }
 
 // ═══════════════════════════════════════════════════════════════

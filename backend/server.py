@@ -89,20 +89,24 @@ async def get_models():
 
 @app.get("/api/loras")
 async def get_loras():
-    """Scan ComfyUI's loras directory and return available LoRAs."""
-    lora_dirs = [
-        Path(os.getenv("COMFY_DIR", "/kaggle/working/ComfyUI")) / "models" / "loras",
-    ]
+    """Return available LoRAs from ComfyUI (remote API) with local fallback."""
+    # Try remote ComfyUI first
+    if await comfy.is_alive():
+        names = await comfy.list_loras()
+        if names:
+            return [{"name": n, "filename": Path(n).name, "size_mb": None} for n in names]
+
+    # Fallback: scan local filesystem (Kaggle / local dev)
+    lora_dir = Path(os.getenv("COMFY_DIR", "/kaggle/working/ComfyUI")) / "models" / "loras"
     loras = []
-    for d in lora_dirs:
-        if d.exists():
-            for f in d.rglob("*"):
-                if f.suffix.lower() in (".safetensors", ".ckpt", ".pt"):
-                    loras.append({
-                        "name": str(f.relative_to(d.parent.parent)),
-                        "filename": f.name,
-                        "size_mb": round(f.stat().st_size / 1024 / 1024, 1),
-                    })
+    if lora_dir.exists():
+        for f in lora_dir.rglob("*"):
+            if f.suffix.lower() in (".safetensors", ".ckpt", ".pt"):
+                loras.append({
+                    "name": str(f.relative_to(lora_dir.parent.parent)),
+                    "filename": f.name,
+                    "size_mb": round(f.stat().st_size / 1024 / 1024, 1),
+                })
     return loras
 
 
@@ -179,24 +183,30 @@ async def generate(req: GenerateRequest):
     if req.cfg is not None:
         params["cfg"] = req.cfg
 
-    input_dir = Path(os.getenv("COMFY_DIR", "/kaggle/working/ComfyUI")) / "input"
-    input_dir.mkdir(parents=True, exist_ok=True)
-
-    def save_b64_image(b64_data: str, prefix: str) -> str:
+    async def upload_b64_image(b64_data: str, prefix: str) -> str:
+        """Upload a base64 image to ComfyUI (remote API) or local input dir as fallback."""
         img_bytes = base64.b64decode(b64_data)
-        tmp = tempfile.NamedTemporaryFile(
-            dir=input_dir, prefix=prefix + "_", suffix=".png", delete=False
-        )
-        tmp.write(img_bytes)
-        tmp.close()
-        return Path(tmp.name).name
+        filename = f"{prefix}_{uuid.uuid4().hex[:8]}.png"
+
+        # Try remote upload first
+        try:
+            if await comfy.is_alive():
+                return await comfy.upload_image(filename, img_bytes)
+        except Exception:
+            pass
+
+        # Fallback: write to local ComfyUI input dir
+        input_dir = Path(os.getenv("COMFY_DIR", "/kaggle/working/ComfyUI")) / "input"
+        input_dir.mkdir(parents=True, exist_ok=True)
+        (input_dir / filename).write_bytes(img_bytes)
+        return filename
 
     if req.init_image_b64:
-        params["init_image"] = save_b64_image(req.init_image_b64, "init")
+        params["init_image"] = await upload_b64_image(req.init_image_b64, "init")
     if req.first_frame_b64:
-        params["first_frame"] = save_b64_image(req.first_frame_b64, "first")
+        params["first_frame"] = await upload_b64_image(req.first_frame_b64, "first")
     if req.last_frame_b64:
-        params["last_frame"] = save_b64_image(req.last_frame_b64, "last")
+        params["last_frame"] = await upload_b64_image(req.last_frame_b64, "last")
 
     try:
         workflow = build_workflow(model_config, params)

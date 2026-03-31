@@ -86,6 +86,38 @@ class ComfyClient:
                 resp.raise_for_status()
                 return await resp.json()
 
+    async def upload_image(self, filename: str, data: bytes) -> str:
+        """Upload an image to ComfyUI's input directory. Returns the stored filename."""
+        form = aiohttp.FormData()
+        form.add_field("image", data, filename=filename, content_type="image/png")
+        form.add_field("overwrite", "true")
+        async with aiohttp.ClientSession() as session:
+            async with session.post(f"{self.base_url}/upload/image", data=form) as resp:
+                resp.raise_for_status()
+                result = await resp.json()
+                return result["name"]
+
+    async def list_loras(self) -> list:
+        """Get available LoRA filenames from ComfyUI via object_info."""
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.get(
+                    f"{self.base_url}/object_info/LoraLoader",
+                    timeout=aiohttp.ClientTimeout(total=10)
+                ) as resp:
+                    if resp.status != 200:
+                        return []
+                    data = await resp.json()
+                    lora_names = (
+                        data.get("LoraLoader", {})
+                            .get("input", {})
+                            .get("required", {})
+                            .get("lora_name", [[]])[0]
+                    )
+                    return lora_names if isinstance(lora_names, list) else []
+        except Exception:
+            return []
+
     async def is_alive(self) -> bool:
         try:
             async with aiohttp.ClientSession() as session:

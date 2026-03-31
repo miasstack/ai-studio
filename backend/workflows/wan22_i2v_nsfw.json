@@ -1,0 +1,161 @@
+{
+  "231": {
+    "inputs": { "unet_name": "Wan_2.2_I2V_HighNoise_10steps_fp8.safetensors", "weight_dtype": "default" },
+    "class_type": "UNETLoader",
+    "_meta": { "title": "Wan 2.2 I2V HighNoise Model" }
+  },
+  "230": {
+    "inputs": { "unet_name": "Wan_2.2_I2V_LowNoise_10steps_fp8.safetensors", "weight_dtype": "default" },
+    "class_type": "UNETLoader",
+    "_meta": { "title": "Wan 2.2 I2V LowNoise Model" }
+  },
+  "38": {
+    "inputs": { "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors", "type": "wan", "device": "default" },
+    "class_type": "CLIPLoader",
+    "_meta": { "title": "T5 Text Encoder" }
+  },
+  "39": {
+    "inputs": { "vae_name": "wan_2.1_vae.safetensors" },
+    "class_type": "VAELoader",
+    "_meta": { "title": "Wan VAE" }
+  },
+  "1001": {
+    "inputs": {
+      "lora_name": "NSFW-22-H-e8.safetensors",
+      "strength_model": 1.0,
+      "strength_clip": 1.0,
+      "model": ["231", 0],
+      "clip": ["38", 0]
+    },
+    "class_type": "LoraLoader",
+    "_meta": { "title": "LoRA: NSFW High" }
+  },
+  "1002": {
+    "inputs": {
+      "lora_name": "wan 2.2/DR34ML4Y_I2V_14B_HIGH.safetensors",
+      "strength_model": 1.0,
+      "strength_clip": 1.0,
+      "model": ["1001", 0],
+      "clip": ["1001", 1]
+    },
+    "class_type": "LoraLoader",
+    "_meta": { "title": "LoRA: DR34ML4Y High" }
+  },
+  "1003": {
+    "inputs": {
+      "lora_name": "NSFW-22-L-e8.safetensors",
+      "strength_model": 1.0,
+      "strength_clip": 1.0,
+      "model": ["230", 0],
+      "clip": ["38", 0]
+    },
+    "class_type": "LoraLoader",
+    "_meta": { "title": "LoRA: NSFW Low" }
+  },
+  "1004": {
+    "inputs": {
+      "lora_name": "wan 2.2/DR34ML4Y_I2V_14B_LOW.safetensors",
+      "strength_model": 1.0,
+      "strength_clip": 1.0,
+      "model": ["1003", 0],
+      "clip": ["1003", 1]
+    },
+    "class_type": "LoraLoader",
+    "_meta": { "title": "LoRA: DR34ML4Y Low" }
+  },
+  "54": {
+    "inputs": { "model": ["1002", 0], "shift": 8 },
+    "class_type": "ModelSamplingSD3",
+    "_meta": { "title": "Sampling Config High" }
+  },
+  "187": {
+    "inputs": { "model": ["1004", 0], "shift": 8 },
+    "class_type": "ModelSamplingSD3",
+    "_meta": { "title": "Sampling Config Low" }
+  },
+  "6": {
+    "inputs": { "text": "a person moving", "clip": ["38", 0] },
+    "class_type": "CLIPTextEncode",
+    "_meta": { "title": "Positive Prompt" }
+  },
+  "7": {
+    "inputs": { "text": "low quality, blurry, distorted anatomy", "clip": ["38", 0] },
+    "class_type": "CLIPTextEncode",
+    "_meta": { "title": "Negative Prompt" }
+  },
+  "214": {
+    "inputs": { "image": "example.png", "upload": "image" },
+    "class_type": "LoadImage",
+    "_meta": { "title": "Input Image" }
+  },
+  "50": {
+    "inputs": {
+      "positive": ["6", 0],
+      "negative": ["7", 0],
+      "vae": ["39", 0],
+      "start_image": ["214", 0],
+      "width": 832,
+      "height": 480,
+      "length": 81,
+      "batch_size": 1
+    },
+    "class_type": "WanImageToVideo",
+    "_meta": { "title": "Image To Video" }
+  },
+  "185": {
+    "inputs": {
+      "model": ["54", 0],
+      "positive": ["50", 0],
+      "negative": ["50", 1],
+      "latent_image": ["50", 2],
+      "add_noise": "enable",
+      "noise_seed": 42,
+      "control_after_generate": "randomize",
+      "steps": 10,
+      "cfg": 2.0,
+      "sampler_name": "uni_pc",
+      "scheduler": "simple",
+      "start_at_step": 0,
+      "end_at_step": 5,
+      "return_with_leftover_noise": "disable"
+    },
+    "class_type": "KSamplerAdvanced",
+    "_meta": { "title": "Sampler High Pass" }
+  },
+  "191": {
+    "inputs": {
+      "model": ["187", 0],
+      "positive": ["50", 0],
+      "negative": ["50", 1],
+      "latent_image": ["185", 0],
+      "add_noise": "disable",
+      "noise_seed": 0,
+      "control_after_generate": "fixed",
+      "steps": 10,
+      "cfg": 1.0,
+      "sampler_name": "uni_pc",
+      "scheduler": "simple",
+      "start_at_step": 5,
+      "end_at_step": 10000,
+      "return_with_leftover_noise": "disable"
+    },
+    "class_type": "KSamplerAdvanced",
+    "_meta": { "title": "Sampler Low Pass" }
+  },
+  "8": {
+    "inputs": { "samples": ["191", 0], "vae": ["39", 0] },
+    "class_type": "VAEDecode"
+  },
+  "135": {
+    "inputs": {
+      "images": ["8", 0],
+      "frame_rate": 16,
+      "loop_count": 0,
+      "filename_prefix": "wan22_nsfw",
+      "format": "video/h264-mp4",
+      "pingpong": false,
+      "save_output": true
+    },
+    "class_type": "VHS_VideoCombine"
+  }
+}

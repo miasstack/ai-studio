@@ -312,6 +312,40 @@
       ]
     },
 
+    "wan-2.2-i2v-nsfw": {
+      "id": "wan-2.2-i2v-nsfw",
+      "name": "Wan 2.2 I2V NSFW",
+      "category": "video",
+      "mode": "i2v",
+      "label": "Image → Video (NSFW)",
+      "description": "Wan 2.2 14B I2V with NSFW LoRAs (NSFW-22 + DR34ML4Y). LoRAs baked in — pick your image and prompt.",
+      "workflow_file": "wan22_i2v_nsfw.json",
+      "param_nodes": {
+        "positive_prompt": {"node_id": "6", "field": "text"},
+        "negative_prompt": {"node_id": "7", "field": "text"},
+        "width":      {"node_id": "50", "field": "width"},
+        "height":     {"node_id": "50", "field": "height"},
+        "frames":     {"node_id": "50", "field": "length"},
+        "seed":       {"node_id": "185", "field": "noise_seed"},
+        "init_image": {"node_id": "214", "field": "image"}
+      },
+      "defaults": {"width": 832, "height": 480, "frames": 81, "steps": 10, "cfg": 2.0, "fps": 16},
+      "aspect_ratios": {
+        "1:1":  {"w": 832,  "h": 832},
+        "16:9": {"w": 1024, "h": 576},
+        "9:16": {"w": 576,  "h": 1024},
+        "4:3":  {"w": 832,  "h": 480},
+        "3:4":  {"w": 544,  "h": 720}
+      },
+      "supports_first_frame": false,
+      "supports_last_frame": false,
+      "fps": 16,
+      "max_frames": 81,
+      "vram_gb": 20,
+      "custom_nodes": ["ComfyUI-WanVideoWrapper", "ComfyUI-VideoHelperSuite"],
+      "download_toggle": "DOWNLOAD_WAN22_I2V"
+    },
+
     "wan-2.2-i2v": {
       "id": "wan-2.2-i2v",
       "name": "Wan 2.2 I2V 14B",
