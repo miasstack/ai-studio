@@ -585,12 +585,13 @@ const RP = {
   get cfg() {
     return {
       apiKey:     localStorage.getItem('rp_apiKey')     || '',
-      templateId: localStorage.getItem('rp_templateId') || '',
+      templateId: localStorage.getItem('rp_templateId') || 'l09djdzv8y',
       volumeId:   localStorage.getItem('rp_volumeId')   || '',
-      gpuType:    localStorage.getItem('rp_gpuType')    || 'NVIDIA GeForce RTX 4090',
+      gpuType:    localStorage.getItem('rp_gpuType')    || 'NVIDIA RTX A5000',
       cloudType:  localStorage.getItem('rp_cloudType')  || 'COMMUNITY',
       podName:    localStorage.getItem('rp_podName')    || 'ai-studio',
       podId:      localStorage.getItem('rp_podId')      || '',
+      podUrl:     localStorage.getItem('rp_podUrl')     || '',
     };
   }
 };
@@ -637,37 +638,57 @@ async function launchPod() {
   const c = RP.cfg;
   if (!c.apiKey || !c.templateId) { openSettings(); return; }
 
+  // GPU fallback order — all 24GB VRAM options, cheapest first
+  const GPU_FALLBACKS = [
+    'NVIDIA RTX A5000',
+    'NVIDIA GeForce RTX 3090',
+    'NVIDIA RTX 3090 Ti',
+    'NVIDIA GeForce RTX 4090',
+    'NVIDIA RTX A6000',
+  ];
+  const CLOUD_ORDER = ['COMMUNITY', 'SECURE', 'ALL'];
+
   setLaunchOverlay(true, 'Creating pod…', 'Requesting GPU from RunPod…');
 
-  // GraphQL mutation to create a pod from template
-  const mutation = `
-    mutation {
-      podFindAndDeployOnDemand(input: {
-        name: "${c.podName}"
-        imageName: "runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04"
-        gpuTypeId: "${c.gpuType}"
-        cloudType: ${c.cloudType || 'COMMUNITY'}
-        supportPublicIp: true
-        startSsh: true
-        templateId: "${c.templateId}"
-        ${c.volumeId ? `networkVolumeId: "${c.volumeId}"` : ''}
-        ports: "7860/http,8188/http,22/tcp"
-        containerDiskInGb: 20
-        volumeInGb: 0
-      }) {
-        id
-        machineId
-        desiredStatus
+  const tryLaunch = (gpuType, cloudType) => {
+    const mutation = `
+      mutation {
+        podFindAndDeployOnDemand(input: {
+          name: "${c.podName}"
+          imageName: "runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04"
+          gpuTypeId: "${gpuType}"
+          cloudType: ${cloudType}
+          supportPublicIp: true
+          startSsh: true
+          templateId: "${c.templateId}"
+          ${c.volumeId ? `networkVolumeId: "${c.volumeId}"` : ''}
+          ports: "7860/http,8188/http,22/tcp"
+          containerDiskInGb: 20
+          volumeInGb: 0
+        }) { id machineId desiredStatus }
       }
-    }
-  `;
+    `;
+    return rpGraphQL(mutation, c.apiKey);
+  };
 
   try {
-    const res = await rpGraphQL(mutation, c.apiKey);
-    const pod = res?.data?.podFindAndDeployOnDemand;
-    if (!pod?.id) throw new Error(JSON.stringify(res?.errors || res));
+    let pod = null;
+    let usedGpu = '';
+    outer:
+    for (const cloud of CLOUD_ORDER) {
+      for (const gpu of GPU_FALLBACKS) {
+        setLaunchOverlay(true, 'Creating pod…', `Trying ${gpu} (${cloud})…`);
+        const res = await tryLaunch(gpu, cloud);
+        const p = res?.data?.podFindAndDeployOnDemand;
+        if (p?.id) { pod = p; usedGpu = gpu; break outer; }
+        const code = res?.errors?.[0]?.extensions?.code;
+        if (code !== 'SUPPLY_CONSTRAINT') throw new Error(JSON.stringify(res?.errors || res));
+      }
+    }
+    if (!pod) throw new Error('No GPU instances available right now. RunPod is sold out. Try again in a few minutes.');
 
     localStorage.setItem('rp_podId', pod.id);
+    toast(`Launched on ${usedGpu}`, 'ok');
     setLaunchOverlay(true, 'Pod created — waiting for it to start…', `Pod ID: ${pod.id}`);
     await waitForPodReady(pod.id, c.apiKey);
 
@@ -711,11 +732,11 @@ async function waitForStudio(baseUrl) {
       if (r.ok) {
         setLaunchOverlay(false);
         updatePodButtons();
-        // Open the pod's studio in a new tab
-        window.open(baseUrl, '_blank');
         document.getElementById('sTxt').textContent = 'Pod running';
         document.getElementById('sDot').className = 'dot ok';
         showOpenStudioBtn(baseUrl);
+        connectWS(); // connect WebSocket to pod backend
+        toast('AI Studio is ready!', 'ok');
         return;
       }
     } catch { /* not ready yet */ }
@@ -833,8 +854,11 @@ async function init() {
 // Models
 // ═══════════════════════════════════════════════════════════════
 async function loadModels() {
+  // Load from models_config embedded in page or from pod backend if running
+  const podUrl = localStorage.getItem('rp_podUrl');
+  const url = podUrl ? `${podUrl}/api/models` : '/api/models';
   try {
-    models = await (await fetch('/api/models')).json();
+    models = await (await fetch(url)).json();
     renderModels();
     const first = Object.values(models).find(m => m.id !== 'custom' && m.category === activeType && m.mode === activeMode);
     if (first) selectModel(first.id);
@@ -1105,7 +1129,9 @@ function readB64(file, cb) {
 // LoRAs
 // ═══════════════════════════════════════════════════════════════
 async function loadLoras() {
-  try { loras = await (await fetch('/api/loras')).json(); } catch { loras = []; }
+  const podUrl = localStorage.getItem('rp_podUrl');
+  const url = podUrl ? `${podUrl}/api/loras` : '/api/loras';
+  try { loras = await (await fetch(url)).json(); } catch { loras = []; }
 }
 
 function addLora() {
@@ -1176,8 +1202,11 @@ async function generate() {
   if (firstFrameB64 && m.supports_first_frame) payload.first_frame_b64 = firstFrameB64;
   if (lastFrameB64  && m.supports_last_frame)  payload.last_frame_b64  = lastFrameB64;
 
+  const podUrl = localStorage.getItem('rp_podUrl');
+  if (!podUrl) { toast('Pod not running — launch it first', 'err'); btn.disabled = false; document.getElementById('genLabel').textContent = 'Generate'; return; }
+
   try {
-    const res = await fetch('/api/generate', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+    const res = await fetch(`${podUrl}/api/generate`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
     if (!res.ok) { const err = await res.json(); throw new Error(err.detail || 'Failed'); }
     const data = await res.json();
     activeJobs[data.job_id] = { model_name: m.name, prompt, progress: 0 };
@@ -1252,8 +1281,10 @@ function showGrid() {
 // WebSocket
 // ═══════════════════════════════════════════════════════════════
 function connectWS() {
-  const proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
-  ws = new WebSocket(`${proto}//${location.host}/ws`);
+  const podId = localStorage.getItem('rp_podId');
+  if (!podId) return;
+  const wsUrl = `wss://${podId}-7860.proxy.runpod.net/ws`;
+  ws = new WebSocket(wsUrl);
   ws.onmessage = e => {
     const msg = JSON.parse(e.data);
     const jid = msg.job_id; if (!jid) return;
