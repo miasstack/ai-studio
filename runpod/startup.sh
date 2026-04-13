@@ -21,6 +21,8 @@ if [ ! -d "$COMFY_DIR" ]; then
   echo "Cloning ComfyUI..." | tee -a $LOG
   git clone --depth=1 https://github.com/comfyanonymous/ComfyUI "$COMFY_DIR"
   pip install -q -r "$COMFY_DIR/requirements.txt"
+  # Fix torchaudio CUDA version mismatch (cu124 matches the base image driver)
+  pip install -q torchaudio --index-url https://download.pytorch.org/whl/cu124
 fi
 
 for d in checkpoints clip vae loras wan diffusion_models unet text_encoders; do
@@ -45,6 +47,7 @@ install_node "ComfyUI-Manager"          "https://github.com/ltdrdata/ComfyUI-Man
 install_node "ComfyUI-VideoHelperSuite" "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite"
 install_node "ComfyUI-LTXVideo"         "https://github.com/Lightricks/ComfyUI-LTXVideo"
 install_node "ComfyUI-WanVideoWrapper"  "https://github.com/kijai/ComfyUI-WanVideoWrapper"
+install_node "ComfyUI-KJNodes"          "https://github.com/kijai/ComfyUI-KJNodes"
 
 # ── 4. Install / update AI Studio backend ────────────────────────────
 GITHUB_REPO="${AI_STUDIO_REPO:-}"   # set in pod env vars: AI_STUDIO_REPO=https://github.com/YOU/ai-studio
