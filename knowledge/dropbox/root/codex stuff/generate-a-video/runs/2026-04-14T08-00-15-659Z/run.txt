@@ -1,0 +1,22 @@
+Run ID: 2026-04-14T08-00-15-659Z
+Created: 2026-04-14T08:00:15.669Z
+Name: tiny-desk-to-empire
+Title: He turned a tiny desk into a whole business
+
+Hook Image Prompt:
+Messy tiny desk in a cramped bedroom, one laptop glowing, sticky notes everywhere, ambitious late-night mood, vertical frame.
+
+Hook Video Prompt:
+Fast but smooth cinematic dolly-in, computer glow flicker, paper movement, determined atmosphere, realistic motion.
+
+Grid 1 Image Prompt:
+Use the reference image to keep the same room and subject. Show the desk transformed into a more organized work setup with multiple screens and visual progress.
+
+Grid 1 Video Prompt:
+Confident tracking shot around the upgraded desk, screens animated, lights pulsing softly, strong sense of momentum.
+
+Grid 2 Image Prompt:
+Use the reference image to keep continuity. Show the same person overlooking a larger office team and a wall of growth charts, success reveal, vertical composition.
+
+Grid 2 Video Prompt:
+Wide reveal with strong forward motion, people moving naturally in the background, success energy, clean premium brand look.

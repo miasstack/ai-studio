@@ -1,0 +1,22 @@
+# Shared prompt notes
+
+Use this file for reusable style notes that you may want to copy into future ideas.
+
+Suggested reminders:
+
+- Keep scenes consistent from one grid to the next.
+- Preserve the same subject, world, lighting direction, and tone.
+- Write for vertical short-form video.
+- Prefer cinematic realism over exaggerated fantasy unless the idea needs fantasy.
+- Keep camera movement smooth and readable on mobile.
+- Hook clip should feel fast and immediate.
+- Grid clips should feel more developed and story-driven.
+
+# Reusable style language
+
+- premium cinematic lighting
+- believable movement
+- strong continuity from reference image
+- detailed environment storytelling
+- high-contrast vertical composition
+- clean Shorts-friendly framing
