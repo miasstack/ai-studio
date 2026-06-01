@@ -1,0 +1,6 @@
+file '/Users/damoneden/Documents/codex stuff/dog-vids-favorites/trimmed/01_hook.mp4'
+file '/Users/damoneden/Documents/codex stuff/dog-vids-favorites/trimmed/02_follow.mp4'
+file '/Users/damoneden/Documents/codex stuff/dog-vids-favorites/trimmed/03_reveal.mp4'
+file '/Users/damoneden/Documents/codex stuff/dog-vids-favorites/trimmed/04_ladder.mp4'
+file '/Users/damoneden/Documents/codex stuff/dog-vids-favorites/trimmed/05_rescue.mp4'
+file '/Users/damoneden/Documents/codex stuff/dog-vids-favorites/trimmed/06_ending.mp4'

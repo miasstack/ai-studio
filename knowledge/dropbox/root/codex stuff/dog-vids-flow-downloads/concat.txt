@@ -1,0 +1,7 @@
+file '/Users/damoneden/Documents/codex stuff/dog-vids-flow-downloads/hook.mp4'
+file '/Users/damoneden/Documents/codex stuff/dog-vids-flow-downloads/driver.mp4'
+file '/Users/damoneden/Documents/codex stuff/dog-vids-flow-downloads/follow.mp4'
+file '/Users/damoneden/Documents/codex stuff/dog-vids-flow-downloads/reveal.mp4'
+file '/Users/damoneden/Documents/codex stuff/dog-vids-flow-downloads/ladder.mp4'
+file '/Users/damoneden/Documents/codex stuff/dog-vids-flow-downloads/rescue.mp4'
+file '/Users/damoneden/Documents/codex stuff/dog-vids-flow-downloads/ending.mp4'

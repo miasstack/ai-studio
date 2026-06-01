@@ -1,0 +1,47 @@
+# This file is meant to be edited by hand.
+# Keep the field labels exactly as written.
+# Add more ideas by copying an IDEA block.
+
+=== IDEA ===
+Name: midnight-city-cleanup
+Title: We cleaned a neon city block before sunrise
+[Hook Image Prompt]
+Cinematic rooftop view over a neon city street at blue hour, cleanup crew silhouettes, glossy pavement, dramatic lighting, vertical composition for YouTube Shorts.
+[/Hook Image Prompt]
+[Hook Video Prompt]
+Slow push-in camera move, drifting fog, flickering neon reflections, workers in subtle motion, dramatic but believable action.
+[/Hook Video Prompt]
+[Grid 1 Image Prompt]
+Use the reference image to keep the same city, mood, and characters. Show the cleanup team moving into the street level with carts, reflective puddles, and stronger detail on the storefronts.
+[/Grid 1 Image Prompt]
+[Grid 1 Video Prompt]
+Medium tracking shot through the street, believable movement, cinematic energy, natural light changes, subtle environmental animation.
+[/Grid 1 Video Prompt]
+[Grid 2 Image Prompt]
+Use the reference image to keep the same world and characters. Show the final reveal of the cleaned street at sunrise with a polished, almost unreal glow.
+[/Grid 2 Image Prompt]
+[Grid 2 Video Prompt]
+Final reveal shot with sunrise light bloom, smooth camera rise, polished environment, emotional ending, premium cinematic finish.
+[/Grid 2 Video Prompt]
+
+=== IDEA ===
+Name: tiny-desk-to-empire
+Title: He turned a tiny desk into a whole business
+[Hook Image Prompt]
+Messy tiny desk in a cramped bedroom, one laptop glowing, sticky notes everywhere, ambitious late-night mood, vertical frame.
+[/Hook Image Prompt]
+[Hook Video Prompt]
+Fast but smooth cinematic dolly-in, computer glow flicker, paper movement, determined atmosphere, realistic motion.
+[/Hook Video Prompt]
+[Grid 1 Image Prompt]
+Use the reference image to keep the same room and subject. Show the desk transformed into a more organized work setup with multiple screens and visual progress.
+[/Grid 1 Image Prompt]
+[Grid 1 Video Prompt]
+Confident tracking shot around the upgraded desk, screens animated, lights pulsing softly, strong sense of momentum.
+[/Grid 1 Video Prompt]
+[Grid 2 Image Prompt]
+Use the reference image to keep continuity. Show the same person overlooking a larger office team and a wall of growth charts, success reveal, vertical composition.
+[/Grid 2 Image Prompt]
+[Grid 2 Video Prompt]
+Wide reveal with strong forward motion, people moving naturally in the background, success energy, clean premium brand look.
+[/Grid 2 Video Prompt]
