@@ -1,0 +1,69 @@
+# Graphify should index durable source material, not caches or generated build output.
+
+# Assistant / tool metadata
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+.codex/
+.claude/
+.agents/plugins/
+.netlify/
+.playwright-mcp/
+.swift-cache/
+.tmp-py/
+.DS_Store
+graphify-out/
+
+# Dependency and build output
+node_modules/
+.venv/
+.venv*/
+__pycache__/
+.pytest_cache/
+.next/
+dist/
+build/
+out/
+coverage/
+
+# Unity/editor generated output
+Library/
+Logs/
+Temp/
+Obj/
+Build/
+Builds/
+UserSettings/
+
+# Heavy generated media/output. Keep prompts, manifests, notes, code, and source refs.
+*.mp4
+*.mov
+*.m4v
+*.wav
+*.mp3
+kidnation-landing-audit.pdf
+seedance-prompts-skill/references/400-ready-to-use-prompts.pdf
+kidnation-voices/output/
+kidnation-voices/.venv311/
+generate-a-video/output/
+generate-a-video/runs/*/state.json
+lyric-video-momma/*.mp4
+
+# Duplicate archival packs already represented by canonical folders or summaries.
+dog-vids-flow-downloads/
+create video-clone skill videos/
+create video-clone skill videos/dog-vids-favorites/
+create video-clone skill videos/dog-vids-flow-downloads/
+
+# Large external app project: index separately when actively working on it.
+Open-Generative-AI/
+
+# Duplicate/exported character asset variants. Keep source sheets and primary web assets.
+treasure-town-demo/unity-treasure-town/Assets/Resources/Characters/
+treasure-town-demo/assets/characters/*-8bit.png
+
+# Package manager lock/build artifacts can dominate relationships without adding meaning.
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+packages-lock.json

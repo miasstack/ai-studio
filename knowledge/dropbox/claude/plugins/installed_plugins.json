@@ -1,0 +1,65 @@
+{
+  "version": 2,
+  "plugins": {
+    "document-skills@anthropic-agent-skills": [
+      {
+        "scope": "user",
+        "installPath": "/Users/damoneden/.claude/plugins/cache/anthropic-agent-skills/document-skills/5128e1865d67",
+        "version": "5128e1865d67",
+        "installedAt": "2026-04-23T20:44:40.416Z",
+        "lastUpdated": "2026-04-23T20:44:40.416Z",
+        "gitCommitSha": "5128e1865d670f5d6c9cef000e6dfc4e951fb5b9"
+      }
+    ],
+    "example-skills@anthropic-agent-skills": [
+      {
+        "scope": "user",
+        "installPath": "/Users/damoneden/.claude/plugins/cache/anthropic-agent-skills/example-skills/5128e1865d67",
+        "version": "5128e1865d67",
+        "installedAt": "2026-04-23T20:44:41.420Z",
+        "lastUpdated": "2026-04-23T20:44:41.420Z",
+        "gitCommitSha": "5128e1865d670f5d6c9cef000e6dfc4e951fb5b9"
+      }
+    ],
+    "claude-api@anthropic-agent-skills": [
+      {
+        "scope": "user",
+        "installPath": "/Users/damoneden/.claude/plugins/cache/anthropic-agent-skills/claude-api/5128e1865d67",
+        "version": "5128e1865d67",
+        "installedAt": "2026-04-23T20:44:42.997Z",
+        "lastUpdated": "2026-04-23T20:44:42.997Z",
+        "gitCommitSha": "5128e1865d670f5d6c9cef000e6dfc4e951fb5b9"
+      }
+    ],
+    "theone-skills@theone-training-skills": [
+      {
+        "scope": "user",
+        "installPath": "/Users/damoneden/.claude/plugins/cache/theone-training-skills/theone-skills/17a315289572",
+        "version": "17a315289572",
+        "installedAt": "2026-04-23T20:46:56.744Z",
+        "lastUpdated": "2026-04-23T20:46:56.744Z",
+        "gitCommitSha": "17a315289572bc3b41d523e4151c1d3bddc1aa61"
+      }
+    ],
+    "claude-mem@thedotmack": [
+      {
+        "scope": "user",
+        "installPath": "/Users/damoneden/.claude/plugins/cache/thedotmack/claude-mem/12.4.8",
+        "version": "12.4.8",
+        "installedAt": "2026-04-28T16:54:41.464Z",
+        "lastUpdated": "2026-04-28T16:54:41.464Z",
+        "gitCommitSha": "7e2da10a8eaebe6e08ee1cda689c6d575639540c"
+      }
+    ],
+    "superpowers@superpowers-dev": [
+      {
+        "scope": "user",
+        "installPath": "/Users/damoneden/.claude/plugins/cache/superpowers-dev/superpowers/5.1.0",
+        "version": "5.1.0",
+        "installedAt": "2026-05-11T14:20:57.424Z",
+        "lastUpdated": "2026-05-11T14:20:57.424Z",
+        "gitCommitSha": "f2cbfbefebbfef77321e4c9abc9e949826bea9d7"
+      }
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "latino-magic",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8032", "--directory", "/tmp/lm-website/Latino Magic Design System website"],
+      "port": 8032,
+      "autoPort": false
+    }
+  ]
+}
