@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,49 +9,42 @@
   <meta property="og:description" content="Recording Artist · #TheMusicTrafficker · De Colombia pal 🌎">
   <meta property="og:image" content="images/fenec-hero.jpg">
   <meta name="theme-color" content="#060406">
-
+  <!-- ══ PIXEL TRACKING — fill in your IDs ══════════════════════════
+       1. Meta Pixel: replace YOUR_META_PIXEL_ID
+       2. TikTok Pixel: replace YOUR_TIKTOK_PIXEL_ID
+  -->
+  <!-- Meta Pixel -->
+  <!-- <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init','YOUR_META_PIXEL_ID');fbq('track','PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=YOUR_META_PIXEL_ID&ev=PageView&noscript=1"/></noscript> -->
+  <!-- TikTok Pixel -->
+  <!-- <script>
+    !function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];
+    ttq.methods=["page","track","identify","instances","debug","on","off","once","ready",
+    "alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"];
+    ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};
+    for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);
+    ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)
+    ttq.setAndDefer(e,ttq.methods[n]);return e};ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",
+    a=n&&n.partner;ttq._i=ttq._i||{};ttq._i[e]=[];ttq._i[e]._u=r;ttq._t=ttq._t||{};
+    ttq._t[e]=+new Date;ttq._o=ttq._o||{};ttq._o[e]=n||{};
+    n=document.createElement("script");n.type="text/javascript";n.async=!0;n.src=r+"?sdkid="+e+"&lib="+t;
+    e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+    ttq.load('YOUR_TIKTOK_PIXEL_ID');ttq.page();}(window,document,'ttq');
+  </script> -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <link rel="preload" as="image" href="images/fenec-hero.jpg" fetchpriority="high">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Josefin+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Josefin+Sans:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <style>
-    /* ── FENEC OVERRIDES ── */
-    :root {
-      --green:      #00C853;
-      --green-dim:  rgba(0,200,83,0.12);
-      --green-glow: rgba(0,200,83,0.40);
-    }
-    .top-bar { background: var(--green); }
-    .hero-name { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.06em; font-size: clamp(4rem, 14vw, 13rem); }
-    .hero-tagline { letter-spacing: 0.35em; font-size: clamp(0.65rem, 1.5vw, 0.85rem); color: var(--gold); text-transform: uppercase; }
-    .hero-bg { background: linear-gradient(180deg, #060a06 0%, #0a120a 100%); }
-    #cursor { background: var(--green); }
-    #cursor-outer { border-color: rgba(0,200,83,0.5); }
-    #cursor.link-hover { background: var(--gold); }
-    #cursor-outer.link-hover { border-color: rgba(201,168,85,0.5); }
-    .section-label { color: var(--green); border-color: var(--green); }
-    .btn-primary { background: var(--green); color: #060406; }
-    .btn-primary:hover { background: var(--gold); }
-    .links-tab.active { border-color: var(--green); color: var(--green); }
-    .link-card:hover { border-color: rgba(0,200,83,0.4); }
-    .link-card-icon { color: var(--green); }
-    .feed-item::after { background: linear-gradient(to top, rgba(0,200,83,0.18), transparent); }
-    .music-card:hover { border-color: rgba(0,200,83,0.35); }
-    .stat-num { color: var(--green); }
-    /* Hero placeholder bg */
-    .hero-bg-placeholder {
-      position: absolute; inset: 0;
-      background: linear-gradient(135deg, #060a06 0%, #0d1a0d 40%, #060a06 100%);
-      display: flex; align-items: center; justify-content: center;
-    }
-    /* Feed placeholder */
-    .feed-placeholder {
-      width: 100%; aspect-ratio: 1;
-      background: linear-gradient(135deg, #0d1a0d, #060a06);
-      display: flex; align-items: center; justify-content: center;
-      color: rgba(0,200,83,0.2); font-size: 2rem;
-    }
-  </style>
 </head>
 <body>
 
@@ -59,20 +52,11 @@
   <div id="cursor" aria-hidden="true"></div>
   <div id="cursor-outer" aria-hidden="true"></div>
 
-  <!-- TOP BAR -->
-  <div class="top-bar">
-    <a href="https://www.instagram.com/feneclaf/" target="_blank" rel="noopener" class="top-bar-link">
-      <span class="top-bar-star">✦</span>
-      <span>@feneclaf — Sígueme en Instagram</span>
-      <span class="top-bar-cta">Follow →</span>
-      <span class="top-bar-star">✦</span>
-    </a>
-  </div>
-
-  <!-- NAV -->
-  <nav id="nav">
+  <!-- NAV — no top bar for Fenec -->
+  <nav id="nav" style="top:0;">
     <a href="#" class="nav-logo">FL</a>
     <div class="nav-links">
+      <a href="#about">About</a>
       <a href="#music">Music</a>
       <a href="#links">Connect</a>
       <a href="#feed">Feed</a>
@@ -85,254 +69,464 @@
         <a href="https://www.tiktok.com/@feneclaf" class="nav-social-icon" target="_blank" rel="noopener" title="TikTok">
           <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
         </a>
-        <a href="https://youtube.com/@feneclaf" class="nav-social-icon" target="_blank" rel="noopener" title="YouTube">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        <a href="https://music.youtube.com/channel/UCphgWFKMS3HZDRGmUUwRk9A" class="nav-social-icon" target="_blank" rel="noopener" title="YouTube Music">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+        </a>
+        <a href="https://open.spotify.com/artist/7AUhL5r52TeFO0zLB1c1aC" class="nav-social-icon" target="_blank" rel="noopener" title="Spotify">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
         </a>
       </div>
-      <button id="mobileToggle" class="mobile-toggle" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
+      <a href="mailto:Managementfenec@gmail.com" class="nav-cta">✦ Booking</a>
     </div>
+    <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 
   <!-- HERO -->
-  <section class="hero" id="hero">
+  <section id="hero">
     <div class="hero-bg">
-      <div class="hero-bg-placeholder">
-        <!-- Replace with: <img src="images/fenec-hero.jpg" alt="Fenec La F" loading="eager"> -->
-        <svg width="120" height="120" viewBox="0 0 24 24" fill="rgba(0,200,83,0.08)"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
-      </div>
+      <img src="images/fenec-hero.jpg" alt="Fenec La F" loading="eager" style="background:#060406;">
     </div>
+    <div class="hero-overlay"></div>
     <canvas id="particles"></canvas>
     <div class="hero-content">
-      <p class="hero-eyebrow reveal">De Colombia pal 🌎</p>
-      <h1 class="hero-name reveal">FENEC</h1>
-      <p class="hero-tagline reveal">LA F &nbsp;·&nbsp; #TheMusicTrafficker &nbsp;·&nbsp; Colombia</p>
-      <div class="hero-cta reveal">
-        <a href="https://open.spotify.com/artist/7AUhL5r52TeFO0zLB1c1aC" target="_blank" rel="noopener" class="btn-primary">Stream Now</a>
-        <a href="#links" class="btn-ghost">Connect</a>
+      <p class="hero-eyebrow">Recording Artist &nbsp;·&nbsp; #TheMusicTrafficker &nbsp;·&nbsp; Colombia</p>
+      <h1 class="hero-name">
+        <span class="name-mia">FENEC</span>
+        <span class="name-bandida">LA F · #TheMusicTrafficker · De Colombia pal 🌎</span>
+      </h1>
+      <p class="hero-tagline">El tráfico que no para</p>
+      <div class="hero-genres">
+        <span>Hip Hop</span>
+        <span>Trap</span>
+        <span>Underground</span>
+        <span>Colombia</span>
+      </div>
+      <div class="hero-ctas">
+        <a href="#music" class="btn-primary">Listen Now</a>
+        <a href="#links" class="btn-ghost">Follow</a>
       </div>
     </div>
-    <div class="hero-scroll-hint" aria-hidden="true">
-      <span>scroll</span>
+    <div class="scroll-indicator">
       <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="ticker-item">FENEC LA F</span><span class="ticker-dot">✦</span>
+      <span class="ticker-item">#THEMUSICTRAFFICKER</span><span class="ticker-dot">✦</span>
+      <span class="ticker-item">HIP HOP</span><span class="ticker-dot">✦</span>
+      <span class="ticker-item">COLOMBIA</span><span class="ticker-dot">✦</span>
+      <span class="ticker-item">UNDERGROUND</span><span class="ticker-dot">✦</span>
+      <span class="ticker-item">NUEVA MÚSICA</span><span class="ticker-dot">✦</span>
+      <span class="ticker-item">FENEC LA F</span><span class="ticker-dot">✦</span>
+      <span class="ticker-item">#THEMUSICTRAFFICKER</span><span class="ticker-dot">✦</span>
+      <span class="ticker-item">HIP HOP</span><span class="ticker-dot">✦</span>
+      <span class="ticker-item">COLOMBIA</span><span class="ticker-dot">✦</span>
+      <span class="ticker-item">UNDERGROUND</span><span class="ticker-dot">✦</span>
+      <span class="ticker-item">NUEVA MÚSICA</span><span class="ticker-dot">✦</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-image-wrap reveal from-left">
+      <div class="about-image-accent"></div>
+      <img src="images/fenec-1.jpg" alt="Fenec La F Portrait" style="background:#0E090E;">
+    </div>
+    <div class="about-text reveal">
+      <p class="section-label">Sobre Él</p>
+      <h2 class="about-title">Born to<br>Traffic</h2>
+      <p class="about-bio">
+        <strong>Fenec "La F"</strong> es un artista de hip hop colombiano conocido como #TheMusicTrafficker. Desde Colombia para el mundo — su música mezcla las calles con la ambición global.
+      </p>
+      <p class="about-bio">
+        Hip hop con alma. Trap con identidad. Un sonido que no pide permiso — llega, golpea, y se queda. El mundo lo está escuchando.
+      </p>
+      <div class="genre-tags">
+        <span class="genre-tag">Hip Hop</span>
+        <span class="genre-tag">Trap</span>
+        <span class="genre-tag">Underground</span>
+        <span class="genre-tag">Street</span>
+        <span class="genre-tag">Colombia</span>
+      </div>
     </div>
   </section>
 
   <!-- MUSIC -->
-  <section class="music section-pad" id="music">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="section-label">Music</span>
+  <section id="music">
+    <div class="music-header">
+      <div>
+        <p class="section-label">Música</p>
         <h2 class="section-title">Latest Releases</h2>
       </div>
-      <div class="music-grid">
-        <a href="https://open.spotify.com/artist/7AUhL5r52TeFO0zLB1c1aC" target="_blank" rel="noopener" class="music-card reveal">
-          <div class="music-art">
-            <div class="music-art-placeholder" style="background:linear-gradient(135deg,#0d1a0d,#060a06);aspect-ratio:1;display:flex;align-items:center;justify-content:center;">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="rgba(0,200,83,0.25)"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+      <a href="https://open.spotify.com/artist/7AUhL5r52TeFO0zLB1c1aC" class="view-all" target="_blank" rel="noopener">View All ↗</a>
+    </div>
+
+    <div class="music-grid">
+
+      <!-- Track 1 -->
+      <a class="song-card reveal" href="https://open.spotify.com/artist/7AUhL5r52TeFO0zLB1c1aC" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">
+        <div class="song-art">
+          <div class="song-art-inner" style="background:linear-gradient(135deg,#0E090E 0%,#1C141C 100%);">
+            <span class="song-art-ms">FL</span>
+            <span class="song-art-soon">— Coming Soon —</span>
+          </div>
+          <div class="song-art-overlay">
+            <div class="play-btn">
+              <svg viewBox="0 0 24 24" fill="white" width="22" height="22"><path d="M8 5v14l11-7z"/></svg>
             </div>
           </div>
-          <div class="music-info">
-            <p class="music-title">Latest Single</p>
-            <p class="music-meta">Fenec La F · Stream on Spotify →</p>
+        </div>
+        <div class="song-info">
+          <p class="song-title">Latest Release</p>
+          <p class="song-artist">Fenec La F</p>
+          <div class="song-platforms">
+            <span class="platform-icon platform-spotify" title="Spotify">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            </span>
+            <span class="platform-icon platform-youtube" title="YouTube Music">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+            </span>
           </div>
-        </a>
-        <a href="https://youtube.com/@feneclaf" target="_blank" rel="noopener" class="music-card reveal">
-          <div class="music-art">
-            <div class="music-art-placeholder" style="background:linear-gradient(135deg,#1a0d0d,#060606);aspect-ratio:1;display:flex;align-items:center;justify-content:center;">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="rgba(200,100,0,0.3)"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </div>
+      </a>
+
+      <!-- Track 2 -->
+      <a class="song-card reveal" href="https://open.spotify.com/artist/7AUhL5r52TeFO0zLB1c1aC" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">
+        <div class="song-art">
+          <div class="song-art-inner" style="background:linear-gradient(135deg,#150F15 0%,#0E090E 100%);">
+            <span class="song-art-ms">FL</span>
+            <span class="song-art-soon">— Coming Soon —</span>
+          </div>
+          <div class="song-art-overlay">
+            <div class="play-btn">
+              <svg viewBox="0 0 24 24" fill="white" width="22" height="22"><path d="M8 5v14l11-7z"/></svg>
             </div>
           </div>
-          <div class="music-info">
-            <p class="music-title">Music Videos</p>
-            <p class="music-meta">Fenec La F · Watch on YouTube →</p>
+        </div>
+        <div class="song-info">
+          <p class="song-title">New Single</p>
+          <p class="song-artist">Fenec La F</p>
+          <div class="song-platforms">
+            <span class="platform-icon platform-spotify" title="Spotify">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            </span>
+            <span class="platform-icon platform-youtube" title="YouTube Music">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+            </span>
           </div>
-        </a>
-        <a href="https://www.tiktok.com/@feneclaf" target="_blank" rel="noopener" class="music-card reveal">
-          <div class="music-art">
-            <div class="music-art-placeholder" style="background:linear-gradient(135deg,#0a0d1a,#060406);aspect-ratio:1;display:flex;align-items:center;justify-content:center;">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="rgba(0,150,200,0.25)"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+        </div>
+      </a>
+
+      <!-- Track 3 — full width -->
+      <a class="song-card reveal" href="https://open.spotify.com/artist/7AUhL5r52TeFO0zLB1c1aC" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;grid-column:1/-1;max-width:400px;margin:0 auto;">
+        <div class="song-art">
+          <div class="song-art-inner" style="background:linear-gradient(135deg,#1C141C 0%,#150F15 100%);">
+            <span class="song-art-ms">FL</span>
+            <span class="song-art-soon">— Coming Soon —</span>
+          </div>
+          <div class="song-art-overlay">
+            <div class="play-btn">
+              <svg viewBox="0 0 24 24" fill="white" width="22" height="22"><path d="M8 5v14l11-7z"/></svg>
             </div>
           </div>
-          <div class="music-info">
-            <p class="music-title">Short Clips</p>
-            <p class="music-meta">Fenec La F · Follow on TikTok →</p>
+        </div>
+        <div class="song-info">
+          <p class="song-title">Próximamente</p>
+          <p class="song-artist">Fenec La F</p>
+          <div class="song-platforms">
+            <span class="platform-icon platform-spotify" title="Spotify">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            </span>
+            <span class="platform-icon platform-youtube" title="YouTube Music">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+            </span>
           </div>
-        </a>
-      </div>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- Streaming Platforms -->
+    <div class="streaming-strip">
+      <a href="https://open.spotify.com/artist/7AUhL5r52TeFO0zLB1c1aC" class="stream-btn reveal" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="#1DB954" width="22" height="22"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+        <span class="stream-btn-name">Spotify</span>
+      </a>
+      <a href="https://music.youtube.com/channel/UCphgWFKMS3HZDRGmUUwRk9A" class="stream-btn reveal" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="#FF0000" width="22" height="22"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+        <span class="stream-btn-name">YouTube Music</span>
+      </a>
+      <a href="https://www.tiktok.com/@feneclaf" class="stream-btn reveal" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="white" width="22" height="22"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+        <span class="stream-btn-name">TikTok</span>
+      </a>
+      <a href="https://www.instagram.com/feneclaf/" class="stream-btn reveal" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22" style="color:#E1306C;"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        <span class="stream-btn-name">Instagram</span>
+      </a>
     </div>
   </section>
 
-  <!-- BIO -->
-  <section class="editorial section-pad" id="bio">
-    <div class="container editorial-grid">
-      <div class="editorial-img reveal">
-        <div style="width:100%;aspect-ratio:3/4;background:linear-gradient(135deg,#0d1a0d,#060a06);display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,200,83,0.1);">
-          <!-- Replace with: <img src="images/fenec-editorial.jpg" alt="Fenec La F"> -->
-          <span style="color:rgba(0,200,83,0.2);font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;">Add Photo</span>
-        </div>
-      </div>
-      <div class="editorial-text reveal">
-        <span class="section-label">About</span>
-        <h2 class="section-title">El Music Trafficker</h2>
-        <p class="editorial-body">
-          Fenec "La F" es un artista de hip hop colombiano conocido como <strong>#TheMusicTrafficker</strong> — traficando música desde Colombia para el mundo.
-        </p>
-        <p class="editorial-body" style="margin-top:1rem;">
-          Con 78K seguidores en Instagram y una presencia en crecimiento en todas las plataformas, Fenec representa la nueva ola del hip hop colombiano: crudo, auténtico y sin filtro.
-        </p>
-        <div class="editorial-stats" style="margin-top:2rem;display:flex;gap:2rem;">
-          <div>
-            <p class="stat-num" style="font-size:1.8rem;font-weight:700;color:var(--green);">78K</p>
-            <p style="font-size:0.75rem;letter-spacing:0.15em;color:var(--gold);text-transform:uppercase;">Instagram</p>
+  <!-- SOCIAL LINKS -->
+  <section id="links">
+    <div class="links-header">
+      <p class="section-label reveal">Connect</p>
+      <h2 class="section-title reveal">Stay Connected</h2>
+    </div>
+
+    <!-- Tab navigation -->
+    <div class="links-tabs" role="tablist">
+      <button class="links-tab active" data-tab="follow" role="tab" aria-selected="true" aria-controls="links-panel-follow">Follow</button>
+      <button class="links-tab" data-tab="capture" role="tab" aria-selected="false" aria-controls="links-panel-capture">Join the Lista</button>
+    </div>
+
+    <!-- Tab: Follow -->
+    <div class="links-tab-panel active" id="links-panel-follow" role="tabpanel">
+      <div class="links-grid">
+
+        <a href="https://www.instagram.com/feneclaf/" class="link-card reveal" target="_blank" rel="noopener">
+          <div class="link-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
           </div>
-          <div>
-            <p class="stat-num" style="font-size:1.8rem;font-weight:700;color:var(--green);">Colombia</p>
-            <p style="font-size:0.75rem;letter-spacing:0.15em;color:var(--gold);text-transform:uppercase;">Origin</p>
+          <div class="link-text">
+            <p class="link-name">Instagram</p>
+            <p class="link-handle">@feneclaf</p>
+          </div>
+          <span class="link-arrow">→</span>
+        </a>
+
+        <a href="https://www.tiktok.com/@feneclaf" class="link-card reveal" target="_blank" rel="noopener">
+          <div class="link-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+          </div>
+          <div class="link-text">
+            <p class="link-name">TikTok</p>
+            <p class="link-handle">@feneclaf</p>
+          </div>
+          <span class="link-arrow">→</span>
+        </a>
+
+        <a href="https://music.youtube.com/channel/UCphgWFKMS3HZDRGmUUwRk9A" class="link-card reveal" target="_blank" rel="noopener">
+          <div class="link-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+          </div>
+          <div class="link-text">
+            <p class="link-name">YouTube Music</p>
+            <p class="link-handle">Fenec La F</p>
+          </div>
+          <span class="link-arrow">→</span>
+        </a>
+
+        <a href="https://open.spotify.com/artist/7AUhL5r52TeFO0zLB1c1aC" class="link-card reveal" target="_blank" rel="noopener">
+          <div class="link-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+          </div>
+          <div class="link-text">
+            <p class="link-name">Spotify</p>
+            <p class="link-handle">Listen Now</p>
+          </div>
+          <span class="link-arrow">→</span>
+        </a>
+
+        <a href="mailto:Managementfenec@gmail.com" class="link-card reveal">
+          <div class="link-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          </div>
+          <div class="link-text">
+            <p class="link-name">Booking &amp; Management</p>
+            <p class="link-handle">Managementfenec@gmail.com</p>
+          </div>
+          <span class="link-arrow">→</span>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- Tab: Join the Lista -->
+    <div class="links-tab-panel" id="links-panel-capture" role="tabpanel">
+      <!-- ══ FORMSPREE SETUP ═══════════════════════════════════════════
+           Sign up free at https://formspree.io/ and replace the three
+           action URLs below with your own form endpoints.
+             Email form  → YOUR_EMAIL_FORM_ID
+             SMS form    → YOUR_SMS_FORM_ID
+             WhatsApp    → YOUR_WA_FORM_ID
+      ════════════════════════════════════════════════════════════════ -->
+      <div class="capture-grid">
+
+        <!-- EMAIL -->
+        <div class="capture-card">
+          <div class="capture-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          </div>
+          <div class="capture-body">
+            <p class="capture-label">Email</p>
+            <h3 class="capture-title">Drops &amp; News</h3>
+            <p class="capture-sub">Every release, show, and exclusive — in your inbox first.</p>
+            <form class="capture-form" id="capture-email" action="https://formspree.io/f/YOUR_EMAIL_FORM_ID" method="POST">
+              <input type="hidden" name="_subject" value="New fan — Email">
+              <div class="capture-input-group">
+                <label for="cap-email" class="visually-hidden">Email address</label>
+                <input type="email" id="cap-email" name="email" placeholder="tu@email.com" required autocomplete="email">
+                <button type="submit" class="capture-submit" aria-label="Subscribe">✦</button>
+              </div>
+              <p class="capture-consent">No spam. Unsubscribe anytime.</p>
+            </form>
+            <div class="capture-success" id="success-email" hidden>
+              <div class="capture-success-icon">✦</div>
+              <p>You're in. Welcome.</p>
+            </div>
           </div>
         </div>
-        <div style="margin-top:2.5rem;">
-          <a href="https://open.spotify.com/artist/7AUhL5r52TeFO0zLB1c1aC" target="_blank" rel="noopener" class="btn-primary">Listen on Spotify</a>
+
+        <!-- SMS -->
+        <div class="capture-card capture-card--sms">
+          <div class="capture-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
+          </div>
+          <div class="capture-body">
+            <p class="capture-label">Text Alerts</p>
+            <h3 class="capture-title">Show &amp; Drop Alerts</h3>
+            <p class="capture-sub">First to know. Tickets, new music, and secret shows sent straight to your phone.</p>
+            <form class="capture-form" id="capture-sms" action="https://formspree.io/f/YOUR_SMS_FORM_ID" method="POST">
+              <input type="hidden" name="_subject" value="New fan — SMS">
+              <div class="capture-input-group">
+                <label for="cap-phone" class="visually-hidden">Phone number</label>
+                <input type="tel" id="cap-phone" name="phone" placeholder="+57 300 000 0000" required autocomplete="tel">
+                <button type="submit" class="capture-submit capture-submit--sms" aria-label="Sign up for texts">
+                  <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
+                </button>
+              </div>
+              <p class="capture-consent">Standard rates may apply. Reply STOP to opt out anytime.</p>
+            </form>
+            <div class="capture-success" id="success-sms" hidden>
+              <div class="capture-success-icon capture-success-icon--sms">✓</div>
+              <p>Got it. Watch your phone.</p>
+            </div>
+          </div>
         </div>
+
+        <!-- WHATSAPP -->
+        <div class="capture-card capture-card--wa">
+          <div class="capture-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </div>
+          <div class="capture-body">
+            <p class="capture-label">WhatsApp</p>
+            <h3 class="capture-title">Inner Circle</h3>
+            <p class="capture-sub">Direct access. Voice notes, previews, and live updates from Fenec himself.</p>
+            <form class="capture-form" id="capture-wa" action="https://formspree.io/f/YOUR_WA_FORM_ID" method="POST">
+              <input type="hidden" name="_subject" value="New fan — WhatsApp">
+              <div class="capture-input-group">
+                <label for="cap-wa" class="visually-hidden">WhatsApp number</label>
+                <input type="tel" id="cap-wa" name="whatsapp" placeholder="+57 300 000 0000" required autocomplete="tel">
+                <button type="submit" class="capture-submit capture-submit--wa" aria-label="Join on WhatsApp">
+                  <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                </button>
+              </div>
+              <p class="capture-consent">We'll add you to the VIP broadcast list.</p>
+            </form>
+            <div class="capture-success" id="success-wa" hidden>
+              <div class="capture-success-icon capture-success-icon--wa">✓</div>
+              <p>On the list. Stay close.</p>
+            </div>
+          </div>
+        </div>
+
       </div>
+    </div>
+
+  </section>
+
+  <!-- SOCIAL FEED -->
+  <section id="feed">
+    <div class="feed-header">
+      <div>
+        <p class="section-label reveal">Social Feed</p>
+        <h2 class="section-title reveal">@feneclaf</h2>
+      </div>
+      <a href="https://www.instagram.com/feneclaf/" class="view-all reveal" target="_blank" rel="noopener">Follow ↗</a>
+    </div>
+    <!-- 6 placeholder image slots — drop fenec-1.jpg through fenec-6.jpg into images/ to fill -->
+    <div class="feed-grid">
+      <a class="feed-item" href="https://www.instagram.com/feneclaf/" target="_blank" rel="noopener" style="background:#0E090E;">
+        <img src="images/fenec-1.jpg" alt="Fenec La F" loading="lazy" onerror="this.style.display='none'">
+        <div class="feed-overlay"><span class="feed-stat">↗</span></div>
+      </a>
+      <a class="feed-item" href="https://www.instagram.com/feneclaf/" target="_blank" rel="noopener" style="background:#150F15;">
+        <img src="images/fenec-2.jpg" alt="Fenec La F" loading="lazy" onerror="this.style.display='none'">
+        <div class="feed-overlay"><span class="feed-stat">↗</span></div>
+      </a>
+      <a class="feed-item" href="https://www.instagram.com/feneclaf/" target="_blank" rel="noopener" style="background:#1C141C;">
+        <img src="images/fenec-3.jpg" alt="Fenec La F" loading="lazy" onerror="this.style.display='none'">
+        <div class="feed-overlay"><span class="feed-stat">↗</span></div>
+      </a>
+      <a class="feed-item" href="https://www.instagram.com/feneclaf/" target="_blank" rel="noopener" style="background:#0E090E;">
+        <img src="images/fenec-4.jpg" alt="Fenec La F" loading="lazy" onerror="this.style.display='none'">
+        <div class="feed-overlay"><span class="feed-stat">↗</span></div>
+      </a>
+      <a class="feed-item" href="https://www.instagram.com/feneclaf/" target="_blank" rel="noopener" style="background:#150F15;">
+        <img src="images/fenec-5.jpg" alt="Fenec La F" loading="lazy" onerror="this.style.display='none'">
+        <div class="feed-overlay"><span class="feed-stat">↗</span></div>
+      </a>
+      <a class="feed-item" href="https://www.instagram.com/feneclaf/" target="_blank" rel="noopener" style="background:#1C141C;">
+        <img src="images/fenec-6.jpg" alt="Fenec La F" loading="lazy" onerror="this.style.display='none'">
+        <div class="feed-overlay"><span class="feed-stat">↗</span></div>
+      </a>
     </div>
   </section>
 
-  <!-- CONNECT / LINKS -->
-  <section class="links section-pad" id="links">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="section-label">Connect</span>
-        <h2 class="section-title">Find Fenec</h2>
-      </div>
-      <div class="links-tabs reveal" role="tablist">
-        <button class="links-tab active" data-tab="socials" role="tab" aria-selected="true">Socials</button>
-        <button class="links-tab" data-tab="music" role="tab" aria-selected="false">Music</button>
-        <button class="links-tab" data-tab="booking" role="tab" aria-selected="false">Booking</button>
-      </div>
-
-      <div id="links-panel-socials" class="links-tab-panel active">
-        <div class="links-grid">
-          <a href="https://www.instagram.com/feneclaf/" target="_blank" rel="noopener" class="link-card">
-            <div class="link-card-icon">
-              <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-            </div>
-            <div class="link-card-text">
-              <p class="link-card-name">Instagram</p>
-              <p class="link-card-handle">@feneclaf</p>
-            </div>
-            <span class="link-card-arrow">→</span>
-          </a>
-          <a href="https://www.tiktok.com/@feneclaf" target="_blank" rel="noopener" class="link-card">
-            <div class="link-card-icon">
-              <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
-            </div>
-            <div class="link-card-text">
-              <p class="link-card-name">TikTok</p>
-              <p class="link-card-handle">@feneclaf</p>
-            </div>
-            <span class="link-card-arrow">→</span>
-          </a>
-          <a href="https://x.com/feneclaf" target="_blank" rel="noopener" class="link-card">
-            <div class="link-card-icon">
-              <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-            </div>
-            <div class="link-card-text">
-              <p class="link-card-name">X / Twitter</p>
-              <p class="link-card-handle">@feneclaf</p>
-            </div>
-            <span class="link-card-arrow">→</span>
-          </a>
-        </div>
-      </div>
-
-      <div id="links-panel-music" class="links-tab-panel">
-        <div class="links-grid">
-          <a href="https://open.spotify.com/artist/7AUhL5r52TeFO0zLB1c1aC" target="_blank" rel="noopener" class="link-card">
-            <div class="link-card-icon" style="color:#1DB954;">
-              <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
-            </div>
-            <div class="link-card-text">
-              <p class="link-card-name">Spotify</p>
-              <p class="link-card-handle">Fenec La F</p>
-            </div>
-            <span class="link-card-arrow">→</span>
-          </a>
-          <a href="https://youtube.com/@feneclaf" target="_blank" rel="noopener" class="link-card">
-            <div class="link-card-icon" style="color:#FF0000;">
-              <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-            </div>
-            <div class="link-card-text">
-              <p class="link-card-name">YouTube</p>
-              <p class="link-card-handle">@feneclaf</p>
-            </div>
-            <span class="link-card-arrow">→</span>
-          </a>
-        </div>
-      </div>
-
-      <div id="links-panel-booking" class="links-tab-panel">
-        <div class="links-grid">
-          <a href="mailto:Managementfenec@gmail.com" class="link-card">
-            <div class="link-card-icon">
-              <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-            </div>
-            <div class="link-card-text">
-              <p class="link-card-name">Booking & Management</p>
-              <p class="link-card-handle">Managementfenec@gmail.com</p>
-            </div>
-            <span class="link-card-arrow">→</span>
-          </a>
-        </div>
-      </div>
+  <!-- MOVEMENT CTA (replaces "For the Real Fans" — no FanVue for Fenec) -->
+  <section id="real-fans">
+    <div class="fans-bg-img">
+      <img src="images/fenec-hero.jpg" alt="" aria-hidden="true" loading="lazy" style="background:#060406;">
     </div>
-  </section>
-
-  <!-- FEED -->
-  <section class="feed section-pad" id="feed">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="section-label">Feed</span>
-        <h2 class="section-title">@feneclaf</h2>
-        <a href="https://www.instagram.com/feneclaf/" target="_blank" rel="noopener" class="section-link">Follow on Instagram →</a>
-      </div>
-      <div class="feed-grid">
-        <a href="https://www.instagram.com/feneclaf/" target="_blank" rel="noopener" class="feed-item reveal">
-          <div class="feed-placeholder">✦</div>
-        </a>
-        <a href="https://www.instagram.com/feneclaf/" target="_blank" rel="noopener" class="feed-item reveal">
-          <div class="feed-placeholder">✦</div>
-        </a>
-        <a href="https://www.instagram.com/feneclaf/" target="_blank" rel="noopener" class="feed-item reveal">
-          <div class="feed-placeholder">✦</div>
-        </a>
-        <a href="https://www.instagram.com/feneclaf/" target="_blank" rel="noopener" class="feed-item reveal">
-          <div class="feed-placeholder">✦</div>
-        </a>
-        <a href="https://www.instagram.com/feneclaf/" target="_blank" rel="noopener" class="feed-item reveal">
-          <div class="feed-placeholder">✦</div>
-        </a>
-        <a href="https://www.instagram.com/feneclaf/" target="_blank" rel="noopener" class="feed-item reveal">
-          <div class="feed-placeholder">✦</div>
-        </a>
-      </div>
+    <div class="fans-overlay"></div>
+    <div class="fans-content reveal">
+      <p class="fans-label">✦ #TheMusicTrafficker ✦</p>
+      <h2 class="fans-title">De Colombia<br>Pal Mundo</h2>
+      <p class="fans-sub">Fenec. La F. Sin filtros.</p>
+      <p class="fans-desc">Hip hop colombiano que no pide permiso.<br>Síguelo y sé parte del movimiento.</p>
+      <a href="https://www.instagram.com/feneclaf/" class="fans-cta" target="_blank" rel="noopener">
+        <span>Follow the Movement</span>
+        <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </a>
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container footer-inner">
-      <p class="footer-logo">FENEC LA F</p>
-      <p class="footer-tagline">#TheMusicTrafficker · De Colombia pal 🌎</p>
-      <div class="footer-socials">
-        <a href="https://www.instagram.com/feneclaf/" target="_blank" rel="noopener">IG</a>
-        <a href="https://www.tiktok.com/@feneclaf" target="_blank" rel="noopener">TT</a>
-        <a href="https://youtube.com/@feneclaf" target="_blank" rel="noopener">YT</a>
-        <a href="https://x.com/feneclaf" target="_blank" rel="noopener">X</a>
-        <a href="https://open.spotify.com/artist/7AUhL5r52TeFO0zLB1c1aC" target="_blank" rel="noopener">SP</a>
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <p class="footer-logo">Fenec La F</p>
+        <p class="footer-tagline">#TheMusicTrafficker · De Colombia pal 🌎</p>
       </div>
-      <p class="footer-copy">© 2026 Fenec La F. All rights reserved.</p>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/feneclaf/" target="_blank" rel="noopener" title="Instagram">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="17" height="17"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@feneclaf" target="_blank" rel="noopener" title="TikTok">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="17" height="17"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+        </a>
+        <a href="https://music.youtube.com/channel/UCphgWFKMS3HZDRGmUUwRk9A" target="_blank" rel="noopener" title="YouTube Music">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="17" height="17"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+        </a>
+        <a href="https://open.spotify.com/artist/7AUhL5r52TeFO0zLB1c1aC" target="_blank" rel="noopener" title="Spotify">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="17" height="17"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2026 Fenec La F. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="mailto:Managementfenec@gmail.com">Booking</a>
+        <a href="mailto:Managementfenec@gmail.com">Press</a>
+      </div>
     </div>
   </footer>
 
