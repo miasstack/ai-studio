@@ -5,19 +5,23 @@
 
 :root {
   --black:      #060406;
-  --dark:      #050A07;
+  --dark:       #0E090E;
   --dark-2:     #150F15;
   --dark-3:     #1C141C;
   --gold:       #C9A855;
   --gold-lt:    #E8D080;
   --gold-dim:   rgba(201,168,85,0.12);
   --gold-glow:  rgba(201,168,85,0.35);
-  --green:       #00C853;
-  --pink-dim:   rgba(0,200,83,0.12);
-  --pink-glow:  rgba(0,200,83,0.4);
-  --cream:      #F5EDD8;
-  --cream-60:   rgba(245,237,216,0.6);
-  --cream-30:   rgba(245,237,216,0.3);
+  --green:      #00E676;
+  --green-dim:  rgba(0,230,118,0.12);
+  --green-glow: rgba(0,230,118,0.4);
+  --pink:       #00E676;
+  --pink-dim:   rgba(0,230,118,0.12);
+  --pink-glow:  rgba(0,230,118,0.4);
+  --offwhite:   #E8E0D0;
+  --cream:      #E8E0D0;
+  --cream-60:   rgba(232,224,208,0.6);
+  --cream-30:   rgba(232,224,208,0.3);
 }
 
 /* ─── RESET ─────────────────────────────────────────────── */
@@ -120,7 +124,7 @@ a { text-decoration:none; color:inherit; }
 /* ─── NAV ────────────────────────────────────────────────── */
 #nav {
   position: fixed;
-  top: 38px; left: 0; right: 0;
+  top: 0; left: 0; right: 0;
   z-index: 500;
   display: flex;
   align-items: center;
@@ -129,7 +133,7 @@ a { text-decoration:none; color:inherit; }
   transition: padding 0.4s ease, background 0.4s ease, backdrop-filter 0.4s ease;
 }
 #nav.scrolled {
-  top: 38px;
+  top: 0;
   padding: 16px 56px;
   background: rgba(6,4,6,0.88);
   backdrop-filter: blur(20px);
@@ -137,7 +141,7 @@ a { text-decoration:none; color:inherit; }
   border-bottom: 1px solid rgba(201,168,85,0.1);
 }
 .nav-logo {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Cinzel Decorative', serif;
   font-size: 21px;
   color: var(--gold);
   letter-spacing: 0.06em;
@@ -265,7 +269,7 @@ a { text-decoration:none; color:inherit; }
   animation: fadeUp 0.9s ease 0.3s forwards;
 }
 .hero-name {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Cinzel Decorative', serif;
   line-height: 0.88;
   margin-bottom: 24px;
 }
@@ -431,7 +435,7 @@ a { text-decoration:none; color:inherit; }
   margin-bottom: 12px;
 }
 .section-title {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Cinzel Decorative', serif;
   font-size: clamp(28px,4.5vw,60px);
   font-weight: 700;
   color: var(--cream);
@@ -482,7 +486,7 @@ a { text-decoration:none; color:inherit; }
 }
 .about-image-wrap img { position: relative; z-index: 1; }
 .about-title {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Cinzel Decorative', serif;
   font-size: clamp(32px,4vw,54px);
   font-weight: 700;
   color: var(--cream);
@@ -557,7 +561,7 @@ a { text-decoration:none; color:inherit; }
   gap: 8px;
 }
 .song-art-ms {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Cinzel Decorative', serif;
   font-size: 13px;
   letter-spacing: 0.35em;
   color: rgba(201,168,85,0.5);
@@ -754,7 +758,7 @@ a { text-decoration:none; color:inherit; }
 .capture-card--wa  .capture-label { color: #25D366; }
 
 .capture-title {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Cinzel Decorative', serif;
   font-size: 17px;
   font-weight: 700;
   color: var(--cream);
@@ -1021,7 +1025,7 @@ a { text-decoration:none; color:inherit; }
   background: linear-gradient(
     to bottom,
     rgba(6,4,6,0.6) 0%,
-    rgba(40,0,20,0.75) 50%,
+    rgba(0,20,10,0.80) 50%,
     rgba(6,4,6,0.6) 100%
   );
 }
@@ -1039,7 +1043,7 @@ a { text-decoration:none; color:inherit; }
   margin-bottom: 24px;
 }
 .fans-title {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Cinzel Decorative', serif;
   font-size: clamp(44px,8vw,96px);
   font-weight: 900;
   color: var(--cream);
@@ -1103,7 +1107,7 @@ footer {
   margin-bottom: 48px;
 }
 .footer-logo {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Cinzel Decorative', serif;
   font-size: 26px;
   font-weight: 700;
   color: var(--gold);

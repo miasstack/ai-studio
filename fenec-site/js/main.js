@@ -96,8 +96,8 @@ class Particle {
     ctx.save();
     ctx.globalAlpha = this.alpha;
     ctx.shadowBlur  = 9;
-    ctx.shadowColor = '#00C853';
-    ctx.fillStyle   = '#00E676';
+    ctx.shadowColor = '#C9A855';
+    ctx.fillStyle   = '#E8D080';
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
     ctx.fill();
