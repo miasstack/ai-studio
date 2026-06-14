@@ -1,5 +1,5 @@
 /* ============================================================
-   MIA SUPREMA — main.js
+   FENEC LA F — main.js
    ============================================================ */
 
 // ─── CUSTOM CURSOR ────────────────────────────────────────
@@ -96,8 +96,8 @@ class Particle {
     ctx.save();
     ctx.globalAlpha = this.alpha;
     ctx.shadowBlur  = 9;
-    ctx.shadowColor = '#C9A855';
-    ctx.fillStyle   = '#E8D080';
+    ctx.shadowColor = '#00C853';
+    ctx.fillStyle   = '#00E676';
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
     ctx.fill();
@@ -224,7 +224,7 @@ submitCapture('capture-wa',    'success-wa');
     const numRaw = (waForm.querySelector('input[type="tel"]')?.value || '').trim();
     const num    = numRaw.replace(/[\s\(\)\-\.]/g, '').replace(/^\+/, '');
     if (num.length >= 7) {
-      const msg = encodeURIComponent('Hola Mia! Me uno al inner circle de WhatsApp ✦');
+      const msg = encodeURIComponent('Hola Fenec! Me uno a tu comunidad ✦');
       setTimeout(() => {
         window.open('https://wa.me/' + num + '?text=' + msg, '_blank', 'noopener,noreferrer');
       }, 600);
